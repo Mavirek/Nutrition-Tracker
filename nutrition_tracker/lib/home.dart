@@ -22,7 +22,10 @@ class HomePage extends StatelessWidget {
       title: 'Home Page',
       home: new Scaffold(
         appBar: new AppBar(
-          title: new Text('Welcome Home'),
+          title: new Text('Home Screen'),
+          actions: <Widget>[
+            new IconButton(icon: Icon(Icons.lock), onPressed: () => _handleSignOut(context)),
+          ],
         ),
         body: new Center(
           child: new Container(
@@ -33,15 +36,10 @@ class HomePage extends StatelessWidget {
                   title: Text(_currentUser.displayName),
                   subtitle: Text(_currentUser.email),
                 ),
-                const Text("Signed in Successfully"),
-                RaisedButton(
-                  child: const Text("Sign Out"),
-                  onPressed: () => _handleSignOut(context),
-                )
               ],
             ),
           ),
-        )
+        ),
       )
     );
   }
