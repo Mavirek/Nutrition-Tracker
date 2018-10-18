@@ -3,9 +3,11 @@ import "fooditem.dart";
 class DailyCal {
   Map items;
 
-  DailyCal() {
+  DailyCal.fromScratch() {
     items = new Map<DateTime, List<FoodItem>>();
   }
+
+  DailyCal.fromExisting(this.items);
 
   addFoodItem(FoodItem item) {
     addFoodItemForDay(item, DateTime.now());

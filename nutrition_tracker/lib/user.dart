@@ -3,13 +3,23 @@ import "fooditem.dart";
 
 class User {
   int _currentHeight, _currentWeight, goal;
+  Map<DateTime, int> _archiveWeight;
   bool metric;
   final DailyCal _cal;
   // Photo _currentPhoto, _previousPhoto
 
-  User(this._currentHeight, this._currentWeight, this.goal, this.metric, this._cal);
+  User.fromScratch() :
+        _currentHeight = 0,
+        _currentWeight = 0,
+        _archiveWeight = new Map<DateTime, int>(),
+        goal = 0,
+        metric = false,
+        _cal = new DailyCal.fromScratch();
+
+  User.fromExisting(this._currentHeight, this._currentWeight, this._archiveWeight, this.goal, this.metric, this._cal);
 
   get currentHeight => _currentHeight;
+  get archiveWeight => _archiveWeight;
   set currentHeight(int newHeight) {
     if (newHeight >= 0)
       _currentHeight = newHeight;
@@ -19,9 +29,10 @@ class User {
 
   get currentWeight => _currentWeight;
   set currentWeight(int newWeight) {
-    if (newWeight >= 0)
+    if (newWeight >= 0) {
       _currentWeight = newWeight;
-    else
+      archiveWeight[DateTime.now()] = newWeight;
+    } else
       throw new ArgumentError("Weight should not be negative.");
   }
 
