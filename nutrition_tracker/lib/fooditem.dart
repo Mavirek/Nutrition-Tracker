@@ -5,8 +5,7 @@ class FoodItem {
 	int fat;
 	int protein;
 	
-	FoodItem(String this.name; int this.calories, int this.carbs, int this.fat, int this.protein) {
-	}
+	FoodItem(this.name, this.calories, this.carbs, this.fat, this.protein);
 	
 	String getName() {
 		return this.name;
@@ -14,8 +13,8 @@ class FoodItem {
 	int getCalories() {
 		return this.calories;
 	}
-	list getMacros() {
-		list macros = [this.carbs, this.fat, this.protein];
+	List getMacros() {
+		List<int> macros = [this.carbs, this.fat, this.protein];
 		return macros;
 	}
 }
