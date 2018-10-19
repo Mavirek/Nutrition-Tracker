@@ -4,7 +4,7 @@ import 'dart:async';
 import 'package:nutrition_tracker/home.dart';
 
 class LoginPage extends StatelessWidget {
-  GoogleSignIn _googleSignIn = new GoogleSignIn(
+  final GoogleSignIn _googleSignIn = new GoogleSignIn(
     scopes: [
       'email',
       'profile',
@@ -13,18 +13,16 @@ class LoginPage extends StatelessWidget {
     ],
   );
 
-  GoogleSignInAccount _currentUser;
-
   Future<Null> _handleSignIn(BuildContext context) async{
     try{
       await _googleSignIn.signIn().then((GoogleSignInAccount account){
-        _currentUser = account;
         Navigator.of(context).push(new PageRouteBuilder(
-            pageBuilder: (_, __, ___) => HomePage(_currentUser, _googleSignIn)
+            pageBuilder: (_, __, ___) => HomePage(account, _googleSignIn)
           )
         );
       });
     } catch(error){
+      print('Inside the Handle Sign In!!!!!!');
       print(error);
     }
   }
@@ -64,6 +62,7 @@ class LoginPage extends StatelessWidget {
               ),
               new SizedBox(height: 150.0,),
               new RaisedButton(
+                key: new Key('LogInButton'),
                 color: Colors.lightBlueAccent,
                 child: new Text(
                   "Sign In",
