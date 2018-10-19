@@ -6,10 +6,8 @@ class HomePage extends StatelessWidget {
   GoogleSignInAccount _currentUser;
   GoogleSignIn _googleSignIn;
 
-  HomePage (GoogleSignInAccount _currentUser, GoogleSignIn _googleSignIn){
-    this._currentUser = _currentUser;
-    this._googleSignIn = _googleSignIn;
-  }
+  HomePage (this._currentUser, this._googleSignIn);
+
 
   Future<Null> _handleSignOut(BuildContext context) async{
     await _googleSignIn.disconnect();
