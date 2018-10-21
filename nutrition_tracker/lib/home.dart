@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'dart:async';
+import 'package:nutrition_tracker/search.dart';
 
 class HomePage extends StatelessWidget {
   GoogleSignInAccount _currentUser;
@@ -20,11 +21,54 @@ class HomePage extends StatelessWidget {
       title: 'Home Page',
       home: new Scaffold(
         appBar: new AppBar(
-          title: new Text('Home Screen'),
+          title: new Text('Nutrition Tracker'),
           actions: <Widget>[
             new IconButton(icon: Icon(Icons.lock), onPressed: () => _handleSignOut(context)),
           ],
         ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                child: new ListView(
+                  children: <Widget>[
+                    new UserAccountsDrawerHeader(
+                        currentAccountPicture: GoogleUserCircleAvatar(identity: _currentUser),
+                        accountName: new Text(_currentUser.displayName),
+                        accountEmail: new Text(_currentUser.email, overflow: TextOverflow.ellipsis,),
+                    )
+                  ],
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+          ),
+        ),
+        ListTile(
+          leading: Icon(Icons.timeline),
+          title: Text('View Progress'),
+          onTap: (){
+            //Navigator.pop(context);
+//            Navigator.of(context).push(new PageRouteBuilder(
+//                pageBuilder: (_, __, ___) => SearchPage()
+//            )
+//            );
+          },
+         ),
+        ListTile(
+          leading: Icon(Icons.fastfood),
+          title: Text('Search Food'),
+          onTap: (){
+            Navigator.pop(context);
+            Navigator.of(context).push(new PageRouteBuilder(
+                pageBuilder: (_, __, ___) => SearchPage()
+            )
+            );
+          },
+        ),
+        ],
+      ),
+    ),
         body: new Center(
           child: new Container(
             child: new ListView(
