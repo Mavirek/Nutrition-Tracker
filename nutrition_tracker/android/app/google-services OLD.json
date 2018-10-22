@@ -23,14 +23,6 @@
           }
         },
         {
-          "client_id": "1048926524465-j196pa03bfdpgbq7eorp1fmfstmj25u7.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.cs1530.nutritiontracker",
-            "certificate_hash": "009c64ea053d777f6498fd363c0fd48a10cc9b04"
-          }
-        },
-        {
           "client_id": "1048926524465-sg1q64upt1rbgv9hticc3g2266e63j29.apps.googleusercontent.com",
           "client_type": 3
         }
