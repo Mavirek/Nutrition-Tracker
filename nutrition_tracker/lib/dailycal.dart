@@ -34,6 +34,19 @@ class DailyCal {
     return cal;
   }
 
+  int getTodaysCal() {
+    return getDailyCal(DateTime.now());
+  }
+
+  List<FoodItem> getFoodForDay(DateTime day) {
+    day = _stripTime(day);
+    List<FoodItem> dayItems = items[day];
+    if (dayItems != null)
+      return new List<FoodItem>.from(dayItems);
+    else
+      return new List<FoodItem>();
+  }
+
   DateTime _stripTime(DateTime dt) {
     return new DateTime(dt.year, dt.month, dt.day);
   }
