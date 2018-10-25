@@ -19,6 +19,10 @@ dependencies:
   #Google Sign in Package.
   google_sign_in: ^3.2.1
 
+  #Database Dependencies
+  sqflite : any
+  path_provider : '>=0.3.0'
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
