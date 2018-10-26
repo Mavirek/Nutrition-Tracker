@@ -10,3 +10,4 @@ build/
 
 nutrition_tracker/.idea/*
 .idea/*
+.idea/libraries/*
