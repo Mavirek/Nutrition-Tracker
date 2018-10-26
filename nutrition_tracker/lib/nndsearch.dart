@@ -9,7 +9,16 @@ class NNDCommunicator {
   NNDCommunicator(String apiKey) : _apiKey = apiKey;
 
   Future<NNDSearchResults> search(String searchTerm, int itemsPerPage, int page) async {
-    return null;
+    int offset = itemsPerPage * (page - 1);
+    String url = "https://api.nal.usda.gov/ndb/search/?format=json&q=$searchTerm&sort=n&max=$itemsPerPage&offset=$offset&api_key=$_apiKey";
+    Response response = await get(url);
+    int statusCode = response.statusCode;
+    String reason = response.reasonPhrase;
+
+    if (statusCode == 200) {
+      return new NNDSearchResults.fromJSON(json.decode(response.body)['list']);
+    } else
+      throw new Exception("HTTP GET EXCEPTION: $statusCode: $reason");
   }
 
   Future<FoodItem> getItem(int ndbno) async {
@@ -24,7 +33,6 @@ class NNDCommunicator {
       int carbs, cals, protein, fat;
 
       for (Map<String, dynamic> nutrient in result['nutrients']) {
-        print(nutrient);
         switch(int.parse(nutrient['nutrient_id'])) {
           case 208: // Calories (technically energy)
             cals = int.parse(nutrient['value']);
@@ -44,7 +52,7 @@ class NNDCommunicator {
       return new FoodItem(name, cals, carbs, fat, protein);
 
     } else
-      throw new Exception("EXCEPTION: $statusCode: $reason");
+      throw new Exception("HTTP GET EXCEPTION: $statusCode: $reason");
   }
 }
 
@@ -54,12 +62,22 @@ class NNDSearchResults {
   final int start, end, total;
 
   NNDSearchResults.fromJSON(Map<String, dynamic> json)
-      : _items = _genList(json), start = json['start'],
+      : _items = _genList(json["item"]), start = json['start'],
         end = json['end'], total = json['total'];
 
-  static List<NNDSearchItem> _genList(Map<String, dynamic> json) {
-    return null;
+  static List<NNDSearchItem> _genList(List<dynamic> json) {
+    List<NNDSearchItem> list = new List<NNDSearchItem>();
+    for (Map<String, dynamic> e in json) {
+      list.insert(e["offset"], new NNDSearchItem.fromJSON(e));
+    }
+    return list;
   }
+
+  NNDSearchItem getItem(int index) {
+    return _items[index];
+  }
+
+  operator [](index) => _items[index];
 }
 
 class NNDSearchItem {
@@ -70,4 +88,11 @@ class NNDSearchItem {
   final String manufacturer;
 
   NNDSearchItem(this.name, this.group, this.ndbno, this.dataSource, this.manufacturer);
+
+  NNDSearchItem.fromJSON(Map<String, dynamic> json)
+      : name = json["name"],
+        group = json["group"],
+        ndbno = int.parse(json["ndbno"]),
+        dataSource = json["ds"],
+        manufacturer = json["manu"];
 }
