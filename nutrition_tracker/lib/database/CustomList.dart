@@ -56,7 +56,7 @@ class CustomList {
     List<int> macros = foodItem.getMacros();
     await dbClient.transaction((txn) async {
       await txn.rawInsert(
-          'INSERT INTO Employee(foodid, name, calories, carbs, fat, protein ) VALUES(' +
+          'INSERT INTO CustomList(foodid, name, calories, carbs, fat, protein ) VALUES(' +
               '\'' +
               foodID.toString() +
               '\'' +
