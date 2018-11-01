@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'dart:async';
-import 'package:nutrition_tracker/search.dart';
+import 'package:nutrition_tracker/pages/search.dart';
+import 'custom_fooditem_add.dart';
+import 'custom_list_page.dart';
 
 class HomePage extends StatelessWidget {
   GoogleSignInAccount _currentUser;
@@ -42,33 +44,55 @@ class HomePage extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   color: Colors.blue,
+                ),
+              ),
+              ListTile(
+                leading: Icon(Icons.timeline),
+                title: Text('View Progress'),
+                onTap: (){
+                  //Navigator.pop(context);
+      //            Navigator.of(context).push(new PageRouteBuilder(
+      //                pageBuilder: (_, __, ___) => SearchPage()
+      //            )
+      //            );
+                },
+               ),
+              ListTile(
+                leading: Icon(Icons.fastfood),
+                title: Text('Search Food'),
+                onTap: (){
+                  Navigator.pop(context);
+                  Navigator.of(context).push(new PageRouteBuilder(
+                      pageBuilder: (_, __, ___) => SearchPage()
+                    )
+                  );
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.fastfood),
+                title: Text('Add Food'),
+                onTap: (){
+                  Navigator.pop(context);
+                  Navigator.of(context).push(new PageRouteBuilder(
+                      pageBuilder: (_, __, ___) => CustomFoodItemPage()
+                    )
+                  );
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.fastfood),
+                title: Text('View Custom List'),
+                onTap: (){
+                  Navigator.pop(context);
+                  Navigator.of(context).push(new PageRouteBuilder(
+                      pageBuilder: (_, __, ___) => CustomListPage()
+                  )
+                  );
+                },
+              ),
+            ],
           ),
         ),
-        ListTile(
-          leading: Icon(Icons.timeline),
-          title: Text('View Progress'),
-          onTap: (){
-            //Navigator.pop(context);
-//            Navigator.of(context).push(new PageRouteBuilder(
-//                pageBuilder: (_, __, ___) => SearchPage()
-//            )
-//            );
-          },
-         ),
-        ListTile(
-          leading: Icon(Icons.fastfood),
-          title: Text('Search Food'),
-          onTap: (){
-            Navigator.pop(context);
-            Navigator.of(context).push(new PageRouteBuilder(
-                pageBuilder: (_, __, ___) => SearchPage()
-            )
-            );
-          },
-        ),
-        ],
-      ),
-    ),
         body: new Center(
           child: new Container(
             child: new ListView(

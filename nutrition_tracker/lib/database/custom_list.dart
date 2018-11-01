@@ -7,12 +7,13 @@ import 'package:nutrition_tracker/fooditem.dart';
 
 class CustomList {
   static Database _db;
-  static int foodID = 0;
+  static int foodID;
 
   Future<Database> get db async {
     if(_db != null)
       return _db;
     _db = await initDb();
+    foodID = 1;
     return _db;
   }
 
@@ -94,6 +95,10 @@ class CustomList {
     }
     print(foodItems.length);
     return foodItems;
+  }
+
+  int nextFoodID(){
+    return foodID;
   }
 
 }

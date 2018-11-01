@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'dart:async';
-import 'package:nutrition_tracker/home.dart';
+import 'package:nutrition_tracker/pages/home.dart';
 
 class LoginPage extends StatelessWidget {
   final GoogleSignIn _googleSignIn = new GoogleSignIn(
