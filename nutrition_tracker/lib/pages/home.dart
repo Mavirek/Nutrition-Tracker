@@ -5,6 +5,7 @@ import 'package:nutrition_tracker/pages/search.dart';
 import 'custom_fooditem_add.dart';
 import 'custom_list_page.dart';
 
+
 class HomePage extends StatelessWidget {
   GoogleSignInAccount _currentUser;
   GoogleSignIn _googleSignIn;
