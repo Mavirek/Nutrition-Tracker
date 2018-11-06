@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:nutrition_tracker/nndsearch.dart';
+import 'package:nutrition_tracker/pages/search_results.dart';
 
 class SearchPage extends StatelessWidget {
+  NNDCommunicator nnd = new NNDCommunicator("rzS3XGZhYjJWf9KBj4mwNYCzhQ4XqF2Y0qi7TjW2");
+
+  final textController = TextEditingController();
+
+  @override
+  void dispose() {
+    textController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -21,10 +32,20 @@ class SearchPage extends StatelessWidget {
                     fillColor: Colors.grey[300],
                     hintText: 'Please enter a food name'
                   ),
+                  controller: textController,
                 ),
               ],
             )
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            nnd.search(textController.text,25,1).then((results){
+              Navigator.of(context).push(new PageRouteBuilder(
+                  pageBuilder: (_, __, ___) => SearchResultsPage(results, results.getTotal()))
+              );
+            });
+          },
         ),
       ),
     );

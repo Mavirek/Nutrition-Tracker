@@ -77,6 +77,10 @@ class NNDSearchResults {
     return _items[index];
   }
 
+  int getTotal(){
+    return total;
+  }
+
   operator [](index) => _items[index];
 }
 
