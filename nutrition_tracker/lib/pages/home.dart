@@ -62,7 +62,7 @@ class HomePage extends StatelessWidget {
                 leading: Icon(Icons.fastfood),
                 title: Text('Search Food'),
                 onTap: (){
-                  Navigator.pop(context);
+                  //Navigator.pop(context);
                   Navigator.of(context).push(new PageRouteBuilder(
                       pageBuilder: (_, __, ___) => SearchPage()
                     )
@@ -73,7 +73,7 @@ class HomePage extends StatelessWidget {
                 leading: Icon(Icons.fastfood),
                 title: Text('Add Food'),
                 onTap: (){
-                  Navigator.pop(context);
+                  //Navigator.pop(context);
                   Navigator.of(context).push(new PageRouteBuilder(
                       pageBuilder: (_, __, ___) => CustomFoodItemPage()
                     )
@@ -84,7 +84,7 @@ class HomePage extends StatelessWidget {
                 leading: Icon(Icons.fastfood),
                 title: Text('View Custom List'),
                 onTap: (){
-                  Navigator.pop(context);
+                  //Navigator.pop(context);
                   Navigator.of(context).push(new PageRouteBuilder(
                       pageBuilder: (_, __, ___) => CustomListPage()
                   )

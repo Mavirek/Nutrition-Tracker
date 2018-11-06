@@ -2,13 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:nutrition_tracker/fooditem.dart';
 import 'package:nutrition_tracker/database/custom_list.dart';
 
+
 class CustomFoodItemPage extends StatelessWidget {
+
+  Future<bool> _back(BuildContext context){
+    Navigator.of(context).pop(true);
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return new MaterialApp(
-      title: 'Add Page',
-      home: Scaffold(
+    return new WillPopScope(
+      onWillPop: () => _back(context),
+      child: Scaffold(
         appBar: AppBar(
           title: Text('Add Page'),
         ),

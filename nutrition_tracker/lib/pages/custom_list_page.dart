@@ -10,12 +10,16 @@ class CustomListPage extends StatelessWidget {
     return customList.getFoodItems();
   }
 
+  Future<bool> _back(BuildContext context){
+    Navigator.of(context).pop(true);
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return new MaterialApp(
-      title: 'CustomList',
-      home: Scaffold(
+    return new WillPopScope(
+      onWillPop: () => _back(context),
+      child: Scaffold(
         appBar: AppBar(
           title: Text('Custom List'),
         ),

@@ -16,7 +16,7 @@ class LoginPage extends StatelessWidget {
   Future<Null> _handleSignIn(BuildContext context) async{
     try{
       await _googleSignIn.signIn().then((GoogleSignInAccount account){
-        Navigator.of(context).push(new PageRouteBuilder(
+        Navigator.push(context, new PageRouteBuilder(
             pageBuilder: (_, __, ___) => HomePage(account, _googleSignIn)
           )
         );
