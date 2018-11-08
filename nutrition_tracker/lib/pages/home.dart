@@ -4,13 +4,16 @@ import 'dart:async';
 import 'package:nutrition_tracker/pages/search.dart';
 import 'custom_fooditem_add.dart';
 import 'custom_list_page.dart';
-
+import 'package:nutrition_tracker/user.dart';
 
 class HomePage extends StatelessWidget {
   GoogleSignInAccount _currentUser;
   GoogleSignIn _googleSignIn;
+  User user;
 
-  HomePage (this._currentUser, this._googleSignIn);
+  HomePage (this._currentUser, this._googleSignIn){
+    user = new User.fromScratch();
+  }
 
 
   Future<Null> _handleSignOut(BuildContext context) async{
@@ -36,11 +39,12 @@ class HomePage extends StatelessWidget {
               DrawerHeader(
                 child: new ListView(
                   children: <Widget>[
-                    new UserAccountsDrawerHeader(
-                        currentAccountPicture: GoogleUserCircleAvatar(identity: _currentUser),
-                        accountName: new Text(_currentUser.displayName),
-                        accountEmail: new Text(_currentUser.email, overflow: TextOverflow.ellipsis,),
-                    )
+                    ListTile(
+                      leading: GoogleUserCircleAvatar(identity: _currentUser),
+                      isThreeLine: true,
+                      title: Text(_currentUser.displayName, style: new TextStyle(color: Colors.white),),
+                      subtitle: new Text(_currentUser.email + '\nCalories: ' + user.dailyCal.getTodaysCal().toString() , style: new TextStyle(color: Colors.white),),
+                    ),
                   ],
                 ),
                 decoration: BoxDecoration(
