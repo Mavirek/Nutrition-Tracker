@@ -27,4 +27,16 @@ class FoodItem {
 		List<int> macros = [this.carbs, this.fat, this.protein];
 		return macros;
 	}
+
+	int getCarbs() {
+		return this.carbs;
+	}
+
+	int getFat() {
+		return this.fat;
+	}
+
+	int getProtein() {
+		return this.protein;
+	}
 }
