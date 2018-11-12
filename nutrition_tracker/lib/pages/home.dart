@@ -6,15 +6,16 @@ import 'custom_fooditem_add.dart';
 import 'custom_list_page.dart';
 import 'package:nutrition_tracker/user.dart';
 import 'package:nutrition_tracker/fooditem.dart';
+import 'stats.dart';
 
 class HomePage extends StatelessWidget {
   GoogleSignInAccount _currentUser;
   GoogleSignIn _googleSignIn;
-  User user;
+  User _user;
   List<List<FoodItem>> categorizedList;
 
   HomePage (this._currentUser, this._googleSignIn){
-    user = new User.fromScratch();
+    _user = new User.fromScratch();
     //Text Code for Home Screen Stuff. Can be ignored.
 //    FoodItem fd1 = new FoodItem("Breakfast", 0, 0, 0, 0);
 //    FoodItem fd2 = new FoodItem("Lunch", 0, 0, 0, 0);
@@ -31,14 +32,14 @@ class HomePage extends StatelessWidget {
 //    user.dailyCal.addFoodItem(fd3);
 //    user.dailyCal.addFoodItem(fd4);
 //    user.dailyCal.addFoodItem(fd5);
-    categorizedList = user.dailyCal.getCategorizedList();
+    categorizedList = _user.dailyCal.getCategorizedList();
   }
-
 
   Future<Null> _handleSignOut(BuildContext context) async{
     await _googleSignIn.disconnect();
     Navigator.pop(context);
   }
+
 
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -62,7 +63,7 @@ class HomePage extends StatelessWidget {
                       leading: GoogleUserCircleAvatar(identity: _currentUser),
                       isThreeLine: true,
                       title: Text(_currentUser.displayName, style: new TextStyle(color: Colors.white),),
-                      subtitle: new Text(_currentUser.email + '\nCalories: ' + user.dailyCal.getTodaysCal().toString() , style: new TextStyle(color: Colors.white),),
+                      subtitle: new Text(_currentUser.email + '\nCalories: ' + _user.dailyCal.getTodaysCal().toString() , style: new TextStyle(color: Colors.white),),
                     ),
                   ],
                 ),
@@ -106,8 +107,16 @@ class HomePage extends StatelessWidget {
                 onTap: (){
                   Navigator.of(context).push(new PageRouteBuilder(
                       pageBuilder: (_, __, ___) => CustomListPage()
-                  )
-                  );
+                  ));
+                },
+              ),
+              ListTile(
+                leading: Icon(Icons.person),
+                title: Text('View Statistics Page'),
+                onTap: (){
+                  Navigator.of(context).push(new PageRouteBuilder(
+                      pageBuilder: (_, __, ___) => StatsPage(_user)
+                  ));
                 },
               ),
             ],
