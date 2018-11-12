@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:nutrition_tracker/user.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class StatsPage extends StatelessWidget {
 
   User user;
+  final reference = FirebaseDatabase.instance.reference();
 
   StatsPage(this.user);
 
   Future<bool> _back(BuildContext context) async{
     //Will need to write User object to firebase before going back!!
+    reference.child(user.displayName).set(user.toJson());
     Navigator.of(context).pop(true);
   }
 

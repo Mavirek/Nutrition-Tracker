@@ -3,6 +3,7 @@ import "fooditem.dart";
 
 class User {
   int _currentHeight, _currentWeight, goal;
+  String displayName;
   Map<DateTime, int> _archiveWeight;
   bool metric;
   final DailyCal _cal;
@@ -36,6 +37,9 @@ class User {
       throw new ArgumentError("Weight should not be negative.");
   }
 
+  void setDisplayName(String name){
+    displayName = name;
+  }
   /*
   get currentPhoto => _currentPhoto;
   get previousPhoto => _previousPhoto;
@@ -75,5 +79,13 @@ class User {
       goal = newGoal;
     } else
       throw new ArgumentError("Goal should not be negative.");
+  }
+
+  toJson() {
+    return {
+      "Current Height": currentHeight,
+      "Current Weight": currentWeight,
+      "Goal": goal,
+    };
   }
 }

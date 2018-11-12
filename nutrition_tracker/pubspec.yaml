@@ -15,6 +15,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  #Firebase
+  firebase_database: ^1.0.5
 
   #Google Sign in Package.
   google_sign_in: ^3.2.1

@@ -7,15 +7,24 @@ import 'custom_list_page.dart';
 import 'package:nutrition_tracker/user.dart';
 import 'package:nutrition_tracker/fooditem.dart';
 import 'stats.dart';
+import 'package:firebase_database/firebase_database.dart';
+
 
 class HomePage extends StatelessWidget {
   GoogleSignInAccount _currentUser;
   GoogleSignIn _googleSignIn;
   User _user;
   List<List<FoodItem>> categorizedList;
+  final reference = FirebaseDatabase.instance.reference();
 
   HomePage (this._currentUser, this._googleSignIn){
     _user = new User.fromScratch();
+    _user.setDisplayName(_currentUser.displayName);
+    reference.child(_currentUser.displayName).once().then((DataSnapshot snapshot) {
+      _user.updateCurrentHeight(snapshot.value["Current Height"].toInt());
+      _user.updateCurrentWeight(snapshot.value["Current Weight"].toInt());
+      _user.updateGoal(snapshot.value["Goal"].toInt());
+    });
     //Text Code for Home Screen Stuff. Can be ignored.
 //    FoodItem fd1 = new FoodItem("Breakfast", 0, 0, 0, 0);
 //    FoodItem fd2 = new FoodItem("Lunch", 0, 0, 0, 0);
@@ -36,6 +45,7 @@ class HomePage extends StatelessWidget {
   }
 
   Future<Null> _handleSignOut(BuildContext context) async{
+    //reference.child(_currentUser.displayName).set(_user.toJson());
     await _googleSignIn.disconnect();
     Navigator.pop(context);
   }
