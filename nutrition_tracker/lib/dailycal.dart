@@ -50,4 +50,37 @@ class DailyCal {
   DateTime _stripTime(DateTime dt) {
     return new DateTime(dt.year, dt.month, dt.day);
   }
+
+  List<List<FoodItem>> getCategorizedList(){
+    List<FoodItem> list = items[_stripTime(DateTime.now())];
+    List<FoodItem> bfList = new List<FoodItem>();
+    List<FoodItem> lhList = new List<FoodItem>();
+    List<FoodItem> skList = new List<FoodItem>();
+    List<FoodItem> drList = new List<FoodItem>();
+    if(list == null)
+      return [bfList, lhList, skList, drList];
+
+    list.forEach((ft) {
+      switch(ft.getCategory()){
+        case "BREAKFAST": {
+          bfList.add(ft);
+        }
+        break;
+        case "LUNCH" : {
+          lhList.add(ft);
+        }
+        break;
+        case "SNACK": {
+          skList.add(ft);
+        }
+        break;
+        case "DINNER": {
+          drList.add(ft);
+        }
+        break;
+      }
+    });
+    return [bfList, lhList, skList, drList];
+  }
+
 }
