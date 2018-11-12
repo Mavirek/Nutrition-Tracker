@@ -54,4 +54,26 @@ class User {
     // TODO Unable to implement without knowing necessary REST JSON format
     return null;
   }
+
+  void updateCurrentHeight(int newHeight) {
+    if (newHeight >= 0)
+      _currentHeight = newHeight;
+    else
+      throw new ArgumentError("Height should not be negative.");
+  }
+
+  void updateCurrentWeight(int newWeight) {
+    if (newWeight >= 0) {
+      _currentWeight = newWeight;
+      archiveWeight[DateTime.now()] = newWeight;
+    } else
+      throw new ArgumentError("Weight should not be negative.");
+  }
+
+  void updateGoal(int newGoal) {
+    if(newGoal >= 0){
+      goal = newGoal;
+    } else
+      throw new ArgumentError("Goal should not be negative.");
+  }
 }

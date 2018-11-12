@@ -10,7 +10,7 @@ class CustomListPage extends StatelessWidget {
     return customList.getFoodItems();
   }
 
-  Future<bool> _back(BuildContext context){
+  Future<bool> _back(BuildContext context) async{
     Navigator.of(context).pop(true);
   }
 
