@@ -38,13 +38,31 @@ class NNDCommunicator {
             cals = int.parse(nutrient['value']);
             break;
           case 205: // Carbohydrates
-            carbs = double.parse(nutrient['value']).round();
+            try {
+              carbs = double.parse(nutrient['value']).round();
+            }
+            on Exception
+            {
+              carbs = 0;
+            }
             break;
           case 204: // Fats (technically lipids)
-            fat = double.parse(nutrient['value']).round();
+            try {
+              fat = double.parse(nutrient['value']).round();
+            }
+            on Exception
+            {
+              fat = 0;
+            }
             break;
           case 203: // Protein
-            protein = double.parse(nutrient['value']).round();
+            try {
+              protein = double.parse(nutrient['value']).round();
+            }
+            on Exception
+            {
+              protein = 0;
+            }
             break;
         }
       }

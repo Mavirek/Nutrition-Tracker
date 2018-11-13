@@ -26,10 +26,13 @@ class SearchResultsPage extends StatelessWidget{
               title: new Text(items.getItem(index).name),
               subtitle: new Text(items.getItem(index).group + "\n"+items.getItem(index).dataSource+"\n"+'${items.getItem(index).ndbno}'+"\n"+items.getItem(index).manufacturer),
               enabled: true,
-              onTap: () async {
-                //items.getItem(index).ndbno
-                FoodItem food = await nnd.getItem(21246);
-                Navigator.of(context).push(new PageRouteBuilder(pageBuilder: (_, __, ___) => NutritionFactsPage(food)));
+              onTap: ()  {
+                //FoodItem food = await nnd.getItem(items.getItem(index).ndbno);
+                nnd.getItem(items.getItem(index).ndbno).then((food){
+                  print("food = "+(food.getName()).toString());
+                  Navigator.of(context).push(new PageRouteBuilder(pageBuilder: (_, __, ___) => NutritionFactsPage(food)));
+                });
+
 
 //                nnd.getItem(14601).then((food) {
 //                  Navigator.of(context).push(new PageRouteBuilder(pageBuilder: (_, __, ___) => NutritionFactsPage(food)));
