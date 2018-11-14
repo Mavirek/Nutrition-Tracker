@@ -28,8 +28,8 @@ class SearchResultsPage extends StatelessWidget{
               enabled: true,
               onTap: () async {
                 //items.getItem(index).ndbno
-                FoodItem food = await nnd.getItem(21246);
-                Navigator.of(context).push(new PageRouteBuilder(pageBuilder: (_, __, ___) => NutritionFactsPage(food)));
+                //FoodItem food = await nnd.getItem(21246);
+                Navigator.of(context).push(new PageRouteBuilder(pageBuilder: (_, __, ___) => NutritionFactsPage(items.getItem(index).ndbno)));
 
 //                nnd.getItem(14601).then((food) {
 //                  Navigator.of(context).push(new PageRouteBuilder(pageBuilder: (_, __, ___) => NutritionFactsPage(food)));
