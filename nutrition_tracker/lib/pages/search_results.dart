@@ -52,43 +52,65 @@ class SearchResultsPage extends StatelessWidget{
       title: Text(ft.getName()),
       content: Text('Calores: ' + ft.calories.toString() + '\nCarbs: ' + ft.carbs.toString() + '\nFat: ' + ft.fat.toString() + '\nProtein: ' + ft.protein.toString()),
       actions: <Widget>[
-        new Column(
-          children: <Widget>[
-            new Radio(value: 0, groupValue: 1, onChanged: (int) {
-                  category = 'BREAKFAST';
-            }),
-            new Text('Breakfast'),
-            new Radio(value: 1, groupValue: radiovalue2, onChanged: (int) {
-              category = 'LUNCH';
-            }),
-            new Text('Lunch'),
-            new Radio(value: 2, groupValue: radiovalue3, onChanged: (int) {
-              category = 'SNACK';
-            }),
-            new Text('Snack'),
-            new Radio(value: 3, groupValue: radiovalue4, onChanged: (int) {
-              category = 'DINNER';
-            }),
-            new Text('Dinner'),
-          ],
-        ),
-        new Row(
-          children: <Widget>[
-            new FlatButton(
-              child: new Text('CANCEL'),
-              onPressed: () {
-                Navigator.of(context, rootNavigator: true).pop();
-              },
-            ),
-            new FlatButton(
-              child: new Text('ADD'),
-              onPressed: () async {
-                ft.setCategory(category);
-                await _user.dailyCal.addFoodItem(ft);
-                Navigator.of(context, rootNavigator: true).pop();
-              },
-            )
-          ],
+        new Center(
+          child:new Column(
+            children: <Widget>[
+              new Row(
+                children: <Widget>[
+                  new Radio(value: 0, groupValue: 1, onChanged: (int) {
+                    category = 'BREAKFAST';
+                    return 0;
+                  }),
+                  new Text('Breakfast'),
+                ],
+              ),
+              new Row(
+                children: <Widget>[
+                  new Radio(value: 1, groupValue: radiovalue2, onChanged: (int) {
+                    category = 'LUNCH';
+                    return 1;
+                  }),
+                  new Text('Lunch'),
+                ],
+              ),
+              new Row(
+                children: <Widget>[
+                  new Radio(value: 2, groupValue: radiovalue3, onChanged: (int) {
+                    category = 'SNACK';
+                    return 2;
+                  }),
+                  new Text('Snack'),
+                ],
+              ),
+              new Row(
+                children: <Widget>[
+                  new Radio(value: 3, groupValue: radiovalue4, onChanged: (int) {
+                    category = 'DINNER';
+                    return 3;
+                  }),
+                  new Text('Dinner'),
+                ],
+              ),
+              new Row(
+                children: <Widget>[
+                  new FlatButton(
+                    child: new Text('CANCEL'),
+                    onPressed: () {
+                      Navigator.of(context, rootNavigator: true).pop();
+                    },
+                  ),
+                  new FlatButton(
+                    child: new Text('ADD'),
+                    onPressed: () async {
+                      ft.setCategory(category);
+                      await _user.dailyCal.addFoodItem(ft);
+                      Navigator.of(context, rootNavigator: true).pop();
+                    },
+                  )
+                ],
+              )
+            ],
+          ),
         )
       ],
 
