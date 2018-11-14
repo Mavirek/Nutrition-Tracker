@@ -54,10 +54,11 @@ class SearchResultsPage extends StatelessWidget{
       actions: <Widget>[
         new Center(
           child:new Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               new Row(
                 children: <Widget>[
-                  new Radio(value: 0, groupValue: 1, onChanged: (int) {
+                  new Radio(value: 0, groupValue: -1, onChanged: (int) {
                     category = 'BREAKFAST';
                     return 0;
                   }),
@@ -66,7 +67,7 @@ class SearchResultsPage extends StatelessWidget{
               ),
               new Row(
                 children: <Widget>[
-                  new Radio(value: 1, groupValue: radiovalue2, onChanged: (int) {
+                  new Radio(value: 1, groupValue: -1, onChanged: (int) {
                     category = 'LUNCH';
                     return 1;
                   }),
@@ -75,7 +76,7 @@ class SearchResultsPage extends StatelessWidget{
               ),
               new Row(
                 children: <Widget>[
-                  new Radio(value: 2, groupValue: radiovalue3, onChanged: (int) {
+                  new Radio(value: 2, groupValue: -1, onChanged: (int) {
                     category = 'SNACK';
                     return 2;
                   }),
@@ -84,7 +85,7 @@ class SearchResultsPage extends StatelessWidget{
               ),
               new Row(
                 children: <Widget>[
-                  new Radio(value: 3, groupValue: radiovalue4, onChanged: (int) {
+                  new Radio(value: 3, groupValue: -1, onChanged: (int) {
                     category = 'DINNER';
                     return 3;
                   }),
