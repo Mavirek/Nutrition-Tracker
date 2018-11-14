@@ -3,23 +3,29 @@ import 'package:nutrition_tracker/nndsearch.dart';
 import 'nutrition_facts.dart';
 import 'package:nutrition_tracker/fooditem.dart';
 import 'package:nutrition_tracker/user.dart';
+import 'package:nutrition_tracker/pages/category.dart';
 
-class SearchResultsPage extends StatelessWidget{
+class SearchResultsPage extends StatefulWidget {
   final int numItems;
   final NNDSearchResults items;
-  final User _user;
-  int radiovalue1 = -1;
-  int radiovalue2 = -1;
-  int radiovalue3 = -1;
-  int radiovalue4 = -1;
+  final User user;
+  
+  SearchResultsPage({Key key, @required this.items, @required this.numItems, @required this.user}) : super(key: key);
+  @override
+  _SearchResultsPageState createState() => new _SearchResultsPageState();
+}
 
-
-  SearchResultsPage(NNDSearchResults results,int itemTotal, User user) : items = results, numItems = itemTotal, _user = user;
-
+class _SearchResultsPageState extends State<SearchResultsPage> {
+  int radiovalue1 = 0;
+  String category = "BREAKFAST";
+  
   NNDCommunicator nnd = new NNDCommunicator("rzS3XGZhYjJWf9KBj4mwNYCzhQ4XqF2Y0qi7TjW2");
 
   @override
   Widget build(BuildContext context){
+    int numItems = widget.numItems;
+    User user = widget.user;
+    NNDSearchResults items = widget.items;
     return MaterialApp(
       title: 'Search Results',
       home: Scaffold(
@@ -35,7 +41,8 @@ class SearchResultsPage extends StatelessWidget{
               enabled: true,
               onTap: () async {
                 FoodItem food = await nnd.getItem(items.getItem(index).ndbno);
-                _showFacts(context, food);
+                _showFacts(context, food, user);
+                //Category(food: food, user: user);
                 //await NutritionFactsPage.setFood(nnd, items.getItem(index).ndbno);
                 //Navigator.of(context).push(new PageRouteBuilder(pageBuilder: (_, __, ___) => NutritionFactsPage()));
               },
@@ -46,8 +53,28 @@ class SearchResultsPage extends StatelessWidget{
     );
   }
 
-  void _showFacts(BuildContext context, FoodItem ft){
-    String category = 'BREAKFAST';
+  void _handleChange(int value) {
+    setState(() {
+      radiovalue1 = value;
+      print("radio = "+radiovalue1.toString());
+      switch(radiovalue1) {
+        case 0:
+          category = "BREAKFAST";
+          break;
+        case 1:
+          category = "LUNCH";
+          break;
+        case 2:
+          category = "SNACK";
+          break;
+        case 3:
+          category = "DINNER";
+          break;
+      }
+    });
+  }
+
+  void _showFacts(BuildContext context, FoodItem ft, User user){
     var alert = new AlertDialog(
       title: Text(ft.getName()),
       content: Text('Calores: ' + ft.calories.toString() + '\nCarbs: ' + ft.carbs.toString() + '\nFat: ' + ft.fat.toString() + '\nProtein: ' + ft.protein.toString()),
@@ -57,37 +84,25 @@ class SearchResultsPage extends StatelessWidget{
             children: <Widget>[
               new Row(
                 children: <Widget>[
-                  new Radio(value: 0, groupValue: 1, onChanged: (int) {
-                    category = 'BREAKFAST';
-                    return 0;
-                  }),
+                  new Radio(value: 0, groupValue: radiovalue1, onChanged: _handleChange),
                   new Text('Breakfast'),
                 ],
               ),
               new Row(
                 children: <Widget>[
-                  new Radio(value: 1, groupValue: radiovalue2, onChanged: (int) {
-                    category = 'LUNCH';
-                    return 1;
-                  }),
+                  new Radio(value: 1, groupValue: radiovalue1, onChanged: _handleChange),
                   new Text('Lunch'),
                 ],
               ),
               new Row(
                 children: <Widget>[
-                  new Radio(value: 2, groupValue: radiovalue3, onChanged: (int) {
-                    category = 'SNACK';
-                    return 2;
-                  }),
+                  new Radio(value: 2, groupValue: radiovalue1, onChanged: _handleChange),
                   new Text('Snack'),
                 ],
               ),
               new Row(
                 children: <Widget>[
-                  new Radio(value: 3, groupValue: radiovalue4, onChanged: (int) {
-                    category = 'DINNER';
-                    return 3;
-                  }),
+                  new Radio(value: 3, groupValue: radiovalue1, onChanged: _handleChange),
                   new Text('Dinner'),
                 ],
               ),
@@ -103,7 +118,7 @@ class SearchResultsPage extends StatelessWidget{
                     child: new Text('ADD'),
                     onPressed: () async {
                       ft.setCategory(category);
-                      await _user.dailyCal.addFoodItem(ft);
+                      await user.dailyCal.addFoodItem(ft);
                       Navigator.of(context, rootNavigator: true).pop();
                     },
                   )

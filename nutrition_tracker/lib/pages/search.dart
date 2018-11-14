@@ -47,7 +47,7 @@ class SearchPage extends StatelessWidget {
           onPressed: () {
             nnd.search(textController.text,25,1).then((results){
               Navigator.of(context).push(new PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => SearchResultsPage(results, results.getTotal(), _user))
+                  pageBuilder: (_, __, ___) => SearchResultsPage(items: results, numItems: results.getTotal(), user: _user))
               );
             });
           },
