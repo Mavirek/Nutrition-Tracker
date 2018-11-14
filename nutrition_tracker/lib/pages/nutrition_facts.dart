@@ -3,14 +3,12 @@ import 'package:nutrition_tracker/fooditem.dart';
 import 'package:nutrition_tracker/nndsearch.dart';
 
 class NutritionFactsPage extends StatelessWidget {
-  FoodItem food;
+  static FoodItem food;
   final NNDCommunicator nnd = new NNDCommunicator("rzS3XGZhYjJWf9KBj4mwNYCzhQ4XqF2Y0qi7TjW2");
-  NutritionFactsPage (int ndbno) {
-    setFood(ndbno);
-  }
 
-  void setFood(int ndbno) async {
+  static Future<FoodItem> setFood(NNDCommunicator nnd, int ndbno) async {
     food = await nnd.getItem(ndbno);
+    return food;
   }
 
   Widget build(BuildContext context) {

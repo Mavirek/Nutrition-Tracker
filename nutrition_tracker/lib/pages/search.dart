@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:nutrition_tracker/nndsearch.dart';
 import 'package:nutrition_tracker/pages/search_results.dart';
+import 'package:nutrition_tracker/user.dart';
 
 class SearchPage extends StatelessWidget {
+  User _user;
+
+  SearchPage(this._user);
+
   NNDCommunicator nnd = new NNDCommunicator("rzS3XGZhYjJWf9KBj4mwNYCzhQ4XqF2Y0qi7TjW2");
 
   final textController = TextEditingController();
@@ -42,7 +47,7 @@ class SearchPage extends StatelessWidget {
           onPressed: () {
             nnd.search(textController.text,25,1).then((results){
               Navigator.of(context).push(new PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => SearchResultsPage(results, results.getTotal()))
+                  pageBuilder: (_, __, ___) => SearchResultsPage(results, results.getTotal(), _user))
               );
             });
           },

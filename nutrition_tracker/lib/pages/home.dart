@@ -96,7 +96,7 @@ class HomePage extends StatelessWidget {
                 title: Text('Search Food'),
                 onTap: (){
                   Navigator.of(context).push(new PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => SearchPage()
+                      pageBuilder: (_, __, ___) => SearchPage(_user)
                     )
                   );
                 },
