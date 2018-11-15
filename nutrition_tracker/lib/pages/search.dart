@@ -6,8 +6,8 @@ import 'package:nutrition_tracker/user.dart';
 
 class SearchPage extends StatelessWidget {
   User _user;
-
-  SearchPage(this._user);
+  String category;
+  SearchPage(this._user, this.category);
 
   NNDCommunicator nnd = new NNDCommunicator("rzS3XGZhYjJWf9KBj4mwNYCzhQ4XqF2Y0qi7TjW2");
 
@@ -47,7 +47,7 @@ class SearchPage extends StatelessWidget {
           onPressed: () {
             nnd.search(textController.text,25,1).then((results){
               Navigator.of(context).push(new PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => SearchResultsPage(items: results, numItems: results.getTotal(), user: _user))
+                  pageBuilder: (_, __, ___) => SearchResultsPage(items: results, numItems: results.getTotal(), user: _user, category: category,))
               );
             });
           },

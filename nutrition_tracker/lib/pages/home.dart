@@ -16,6 +16,7 @@ class HomePage extends StatelessWidget {
   User _user;
   List<List<FoodItem>> categorizedList;
   final reference = FirebaseDatabase.instance.reference();
+  final List<String> categories = ["Breakfast", "Lunch", "Snack", "Dinner"];
 
   HomePage (this._currentUser, this._googleSignIn){
     _user = new User.fromScratch();
@@ -95,10 +96,11 @@ class HomePage extends StatelessWidget {
                 leading: Icon(Icons.fastfood),
                 title: Text('Search Food'),
                 onTap: (){
-                  Navigator.of(context).push(new PageRouteBuilder(
-                      pageBuilder: (_, __, ___) => SearchPage(_user)
-                    )
-                  );
+                  _showCategories(context);
+//                  Navigator.of(context).push(new PageRouteBuilder(
+//                      pageBuilder: (_, __, ___) => SearchPage(_user)
+//                    )
+//                  );
                 },
               ),
               ListTile(
@@ -196,7 +198,38 @@ class HomePage extends StatelessWidget {
       )
     );
   }
-
+  void _showCategories(BuildContext context){
+    var alert = new AlertDialog(
+      title: Text('Pick a Category'),
+      content: Container(
+        width: MediaQuery.of(context).size.width * 0.9,
+        height: MediaQuery.of(context).size.width * 0.9,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child:ListView.builder(
+                itemCount: categories.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(
+                    title: Text(categories[index]),
+                    onTap: () {
+                      Navigator.of(context).push(new PageRouteBuilder(
+                          pageBuilder: (_, __, ___) => SearchPage(_user, categories[index])
+                      )
+                      );
+                    },
+                  );
+                },
+                shrinkWrap: true,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+    showDialog(context: context, builder: (context) => alert);
+  }
   void _showFacts(BuildContext context, FoodItem ft){
     var alert = new AlertDialog(
       title: Text(ft.getName()),
