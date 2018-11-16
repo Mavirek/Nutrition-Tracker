@@ -132,7 +132,7 @@ class StatsPage extends StatelessWidget {
       actions: <Widget>[
         new FlatButton(
           onPressed: () {
-            user.updateCurrentWeight(int.parse(control.text));
+            user.currentWeight = int.parse(control.text);
             Navigator.of(context, rootNavigator: true).pop();
           },
           child: Text('Save')

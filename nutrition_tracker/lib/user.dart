@@ -83,9 +83,15 @@ class User {
 
   toJson() {
     return {
-      "Current Height": currentHeight,
-      "Current Weight": currentWeight,
+      "Current Height": _currentHeight,
+      "Current Weight": _currentWeight,
       "Goal": goal,
+      "Metric": metric,
+      "Archive Weight": _archiveWeight.map<String, dynamic>(
+        (DateTime key, int value) {
+          return new MapEntry<String, dynamic>(key.millisecondsSinceEpoch.toString(), value);
+        }
+      )
     };
   }
 }
