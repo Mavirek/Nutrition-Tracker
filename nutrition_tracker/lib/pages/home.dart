@@ -19,12 +19,12 @@ class HomePage extends StatelessWidget {
   final List<String> categories = ["Breakfast", "Lunch", "Snack", "Dinner"];
 
   HomePage (this._currentUser, this._googleSignIn){
-    _user = new User.fromScratch();
-    _user.setDisplayName(_currentUser.displayName);
     reference.child(_currentUser.displayName).once().then((DataSnapshot snapshot) {
-      _user.updateCurrentHeight(snapshot.value["Current Height"].toInt());
-      _user.updateCurrentWeight(snapshot.value["Current Weight"].toInt());
-      _user.updateGoal(snapshot.value["Goal"].toInt());
+      if (snapshot.value == null) {
+        _user = new User.fromScratch();
+        _user.displayName = _currentUser.displayName;
+      } else
+        _user = new User.fromJSON(_currentUser.displayName, snapshot.value);
     });
     //Text Code for Home Screen Stuff. Can be ignored.
 //    FoodItem fd1 = new FoodItem("Breakfast", 0, 0, 0, 0);

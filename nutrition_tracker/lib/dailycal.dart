@@ -9,6 +9,16 @@ class DailyCal {
 
   DailyCal.fromExisting(this.items);
 
+  DailyCal.fromJSON(Map<String, dynamic> json) {
+    items = json.map<DateTime, List<FoodItem>>((String key, dynamic value) {
+        DateTime time = DateTime.fromMillisecondsSinceEpoch(int.parse(key));
+        List<FoodItem> list = new List<FoodItem>();
+        value.values.forEach((v) => list.add(new FoodItem.fromJSON(v)));
+        return MapEntry<DateTime, List<FoodItem>>(time, list);
+      }
+    );
+  }
+
   addFoodItem(FoodItem item) {
     addFoodItemForDay(item, DateTime.now());
   }
