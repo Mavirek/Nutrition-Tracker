@@ -91,7 +91,8 @@ class User {
         (DateTime key, int value) {
           return new MapEntry<String, dynamic>(key.millisecondsSinceEpoch.toString(), value);
         }
-      )
+      ),
+      "Daily Calories": _cal.toJSON()
     };
   }
 }

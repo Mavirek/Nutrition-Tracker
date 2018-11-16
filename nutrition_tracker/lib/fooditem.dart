@@ -39,4 +39,15 @@ class FoodItem {
 	int getProtein() {
 		return this.protein;
 	}
+
+	Map<String, dynamic> toJSON() {
+		return {
+			"Name": name,
+			"Calories": calories,
+			"Carbs": carbs,
+			"Fat": fat,
+			"Protein": protein,
+			"Category": category
+		};
+	}
 }

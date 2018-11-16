@@ -1,7 +1,7 @@
 import "fooditem.dart";
 
 class DailyCal {
-  Map items;
+  Map<DateTime, List<FoodItem>> items;
 
   DailyCal.fromScratch() {
     items = new Map<DateTime, List<FoodItem>>();
@@ -83,4 +83,19 @@ class DailyCal {
     return [bfList, lhList, skList, drList];
   }
 
+  toJSON() {
+    print(items);
+    if (items.isNotEmpty)
+      return items.map<String, dynamic>(
+        (DateTime key, List<FoodItem> value) {
+          return MapEntry<String, dynamic>(key.millisecondsSinceEpoch.toString(),
+              value.asMap().map<String, dynamic>((int index, FoodItem item) {
+                    return MapEntry<String, dynamic>(
+                        index.toString(), item.toJSON());
+                  }
+              ));
+        });
+    else
+      return "empty";
+  }
 }
