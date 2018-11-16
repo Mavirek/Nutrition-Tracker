@@ -63,7 +63,7 @@ class CustomList {
               '\'' +
               ',' +
               '\'' +
-              foodItem.getName() +
+              foodItem.getName().toUpperCase() +
               '\'' +
               ',' +
               '\'' +
@@ -88,7 +88,7 @@ class CustomList {
 
   Future<List<FoodItem>> searchCustomList(String searchParams) async {
     var dbClient = await db;
-    List<Map> list = await dbClient.query("CustomList", columns: ['*'], where: '"name" = ?', whereArgs: [searchParams]);
+    List<Map> list = await dbClient.query("CustomList", columns: ['*'], where: '"name" = ?', whereArgs: [searchParams.toUpperCase()]);
     List<FoodItem> foodItems = new List();
     for (int i = 0; i < list.length; i++) {
       foodItems.add(new FoodItem(list[i]["name"], list[i]["calories"], list[i]["carbs"], list[i]["fat"], list[i]["protein"]));

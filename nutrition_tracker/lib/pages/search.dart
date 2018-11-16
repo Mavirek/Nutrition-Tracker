@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:nutrition_tracker/nndsearch.dart';
 import 'package:nutrition_tracker/pages/search_results.dart';
 import 'package:nutrition_tracker/user.dart';
+import 'package:nutrition_tracker/database/custom_list.dart';
+import 'package:nutrition_tracker/fooditem.dart';
 
 class SearchPage extends StatelessWidget {
   User _user;
@@ -18,11 +20,15 @@ class SearchPage extends StatelessWidget {
     textController.dispose();
   }
 
+  Future<bool> _back(BuildContext context) async{
+    Navigator.of(context).pop(true);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Search Page',
-      home: new Scaffold(
+    return new WillPopScope(
+      onWillPop: () => _back(context),
+      child: new Scaffold(
         appBar: new AppBar(
           title: new Text('Food Search'),
         ),
@@ -45,10 +51,35 @@ class SearchPage extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            nnd.search(textController.text,25,1).then((results){
-              Navigator.of(context).push(new PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => SearchResultsPage(items: results, numItems: results.getTotal(), user: _user, category: category,))
-              );
+            nnd.search(textController.text,25,1).then((results) async {
+              //print("is results null? "+(results==null).toString());
+              if(results==null) {
+                print("search failed");
+                var customList = CustomList();
+                List<FoodItem> customFoods = await customList.searchCustomList(textController.text);
+                if(customFoods.length>0)
+                  Navigator.of(context).push(new PageRouteBuilder(
+                      pageBuilder: (_, __, ___) =>
+                          SearchResultsPage(items: null,
+                            numItems: customFoods.length,
+                            user: _user,
+                            category: category,
+                            foodList: customFoods,
+                            isNND: false))
+                  );
+              }
+              else {
+                Navigator.of(context).push(new PageRouteBuilder(
+                    pageBuilder: (_, __, ___) =>
+                        SearchResultsPage(items: results,
+                          numItems: results.getTotal(),
+                          user: _user,
+                          category: category,
+                          foodList: null,
+                          isNND: true))
+                );
+              }
+              //Navigator.of(context, rootNavigator: true).pop(user);
             });
           },
         ),

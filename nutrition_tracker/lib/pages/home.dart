@@ -218,6 +218,7 @@ class HomePage extends StatelessWidget {
                           pageBuilder: (_, __, ___) => SearchPage(_user, categories[index])
                       )
                       );
+                      //categorizedList = _user.dailyCal.getCategorizedList();
                     },
                   );
                 },

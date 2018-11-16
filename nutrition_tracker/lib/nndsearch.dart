@@ -14,10 +14,21 @@ class NNDCommunicator {
     Response response = await get(url);
     int statusCode = response.statusCode;
     String reason = response.reasonPhrase;
-
+    String body = response.body;
+    if(body.contains("\"status\": 400"))
+      statusCode = 400;
+    print("status code = "+statusCode.toString());
+    print("reason = "+reason);
+    print("response body = "+response.body);
     if (statusCode == 200) {
-      return new NNDSearchResults.fromJSON(json.decode(response.body)['list']);
-    } else
+      return new NNDSearchResults.fromJSON(
+            json.decode(response.body)['list']);
+    }
+    else if(statusCode == 400)
+    {
+      print("status code 400 - search failed");
+    }
+    else
       throw new Exception("HTTP GET EXCEPTION: $statusCode: $reason");
   }
 
