@@ -7,6 +7,14 @@ class FoodItem {
 	String category;
 
 	FoodItem(this.name, this.calories, this.carbs, this.fat, this.protein);
+
+	FoodItem.fromJSON(Map<String, dynamic> json) :
+			name = json["Name"],
+			calories = json["Calories"],
+			carbs = json["Carbs"],
+			fat = json["Fat"],
+			protein = json["Protein"],
+			category = json["Category"];
 	
 	String getName() {
 		return this.name;
@@ -38,5 +46,16 @@ class FoodItem {
 
 	int getProtein() {
 		return this.protein;
+	}
+
+	Map<String, dynamic> toJSON() {
+		return {
+			"Name": name,
+			"Calories": calories,
+			"Carbs": carbs,
+			"Fat": fat,
+			"Protein": protein,
+			"Category": category
+		};
 	}
 }

@@ -1,13 +1,23 @@
 import "fooditem.dart";
 
 class DailyCal {
-  Map items;
+  Map<DateTime, List<FoodItem>> items;
 
   DailyCal.fromScratch() {
     items = new Map<DateTime, List<FoodItem>>();
   }
 
   DailyCal.fromExisting(this.items);
+
+  DailyCal.fromJSON(Map<String, dynamic> json) {
+    items = json.map<DateTime, List<FoodItem>>((String key, dynamic value) {
+        DateTime time = DateTime.fromMillisecondsSinceEpoch(int.parse(key));
+        List<FoodItem> list = new List<FoodItem>();
+        value.values.forEach((v) => list.add(new FoodItem.fromJSON(v)));
+        return MapEntry<DateTime, List<FoodItem>>(time, list);
+      }
+    );
+  }
 
   addFoodItem(FoodItem item) {
     addFoodItemForDay(item, DateTime.now());
@@ -83,4 +93,19 @@ class DailyCal {
     return [bfList, lhList, skList, drList];
   }
 
+  toJSON() {
+    print(items);
+    if (items.isNotEmpty)
+      return items.map<String, dynamic>(
+        (DateTime key, List<FoodItem> value) {
+          return MapEntry<String, dynamic>(key.millisecondsSinceEpoch.toString(),
+              value.asMap().map<String, dynamic>((int index, FoodItem item) {
+                    return MapEntry<String, dynamic>(
+                        index.toString(), item.toJSON());
+                  }
+              ));
+        });
+    else
+      return "empty";
+  }
 }
