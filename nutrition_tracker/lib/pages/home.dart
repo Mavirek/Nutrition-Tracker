@@ -175,7 +175,9 @@ class HomePage extends StatelessWidget {
             title: Text('View Statistics Page'),
             onTap: (){
               Navigator.of(context).push(new PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => StatsPage(_user)
+                  pageBuilder: (_, __, ___) => StatsPage(_user, (User u) {
+                    _user = u;
+                  })
               ));
             },
           ),
