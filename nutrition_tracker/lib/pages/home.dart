@@ -57,77 +57,30 @@ class HomePage extends StatelessWidget {
                 new IconButton(icon: Icon(Icons.lock), onPressed: () => _handleSignOut(context)),
               ],
             ),
-            /*drawer: Drawer(
-              child: ListView(
-                padding: EdgeInsets.zero,
-                children: <Widget>[
-                  DrawerHeader(
-                    child: new ListView(
-                      children: <Widget>[
-                        ListTile(
-                          leading: GoogleUserCircleAvatar(identity: _currentUser),
-                          isThreeLine: true,
-                          title: Text(_currentUser.displayName, style: new TextStyle(color: Colors.white),),
-                          subtitle: new Text(_currentUser.email + '\nCalories: ' + _user.dailyCal.getTodaysCal().toString() , style: new TextStyle(color: Colors.white),),
-                        ),
-                      ],
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                    ),
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.timeline),
-                    title: Text('View Progress'),
-                    onTap: (){
-                      //            Navigator.of(context).push(new PageRouteBuilder(
-                      //                pageBuilder: (_, __, ___) => SearchPage()
-                      //            )
-                      //            );
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.fastfood),
-                    title: Text('Search Food'),
-                    onTap: (){
-                      _showCategories(context);
-//                  Navigator.of(context).push(new PageRouteBuilder(
-//                      pageBuilder: (_, __, ___) => SearchPage(_user)
-//                    )
-//                  );
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.fastfood),
-                    title: Text('Add Food'),
-                    onTap: (){
-                      Navigator.of(context).push(new PageRouteBuilder(
-                          pageBuilder: (_, __, ___) => CustomFoodItemPage()
-                      )
-                      );
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.fastfood),
-                    title: Text('View Custom List'),
-                    onTap: (){
-                      Navigator.of(context).push(new PageRouteBuilder(
-                          pageBuilder: (_, __, ___) => CustomListPage()
-                      ));
-                    },
-                  ),
-                  ListTile(
-                    leading: Icon(Icons.person),
-                    title: Text('View Statistics Page'),
-                    onTap: (){
-                      Navigator.of(context).push(new PageRouteBuilder(
-                          pageBuilder: (_, __, ___) => StatsPage(_user)
-                      ));
-                    },
-                  ),
-                ],
-              ),
-            ),*/
+            drawer: FutureBuilder<DataSnapshot>(
+                  future: _userFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      if (_user == null) {
+                        print(snapshot.data.value);
+                        if (snapshot.data.value == null) {
+                          _user = new User.fromScratch();
+                          _user.displayName = _currentUser.displayName;
+                        } else
+                          _user = new User.fromJSON(
+                              _currentUser.displayName, snapshot.data.value);
+                        categorizedList = _user.dailyCal.getCategorizedList();
+                      }
+                      return buildDrawer(context);
+                    } else if (snapshot.hasError) {
+                      // TODO Better error screen
+                      return Text("${snapshot.error}");
+                    }
+
+                    // By default, show a loading spinner
+                    return CircularProgressIndicator();
+                  },
+                ),
             body: Center(
                 child: FutureBuilder<DataSnapshot>(
                   future: _userFuture,
@@ -157,7 +110,79 @@ class HomePage extends StatelessWidget {
         )
     );
   }
-
+  buildDrawer(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          DrawerHeader(
+            child: new ListView(
+              children: <Widget>[
+                ListTile(
+                  leading: GoogleUserCircleAvatar(identity: _currentUser),
+                  isThreeLine: true,
+                  title: Text(_currentUser.displayName, style: new TextStyle(color: Colors.white),),
+                  subtitle: new Text(_currentUser.email + '\nCalories: ' + _user.dailyCal.getTodaysCal().toString() , style: new TextStyle(color: Colors.white),),
+                ),
+              ],
+            ),
+            decoration: BoxDecoration(
+              color: Colors.blue,
+            ),
+          ),
+          ListTile(
+            leading: Icon(Icons.timeline),
+            title: Text('View Progress'),
+            onTap: (){
+              //            Navigator.of(context).push(new PageRouteBuilder(
+              //                pageBuilder: (_, __, ___) => SearchPage()
+              //            )
+              //            );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.fastfood),
+            title: Text('Search Food'),
+            onTap: (){
+              _showCategories(context);
+//                  Navigator.of(context).push(new PageRouteBuilder(
+//                      pageBuilder: (_, __, ___) => SearchPage(_user)
+//                    )
+//                  );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.fastfood),
+            title: Text('Add Food'),
+            onTap: (){
+              Navigator.of(context).push(new PageRouteBuilder(
+                  pageBuilder: (_, __, ___) => CustomFoodItemPage()
+              )
+              );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.fastfood),
+            title: Text('View Custom List'),
+            onTap: (){
+              Navigator.of(context).push(new PageRouteBuilder(
+                  pageBuilder: (_, __, ___) => CustomListPage()
+              ));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.person),
+            title: Text('View Statistics Page'),
+            onTap: (){
+              Navigator.of(context).push(new PageRouteBuilder(
+                  pageBuilder: (_, __, ___) => StatsPage(_user)
+              ));
+            },
+          ),
+        ],
+      ),
+    );
+  }
   buildBody() {
     return new Column(
       children: <Widget>[
