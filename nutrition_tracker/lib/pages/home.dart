@@ -21,6 +21,7 @@ class HomePage extends StatelessWidget {
 
   HomePage (this._currentUser, this._googleSignIn){
     _userFuture = reference.child(_currentUser.displayName).once();
+    reference.child(_currentUser.displayName).on
     //Text Code for Home Screen Stuff. Can be ignored.
 //    FoodItem fd1 = new FoodItem("Breakfast", 0, 0, 0, 0);
 //    FoodItem fd2 = new FoodItem("Lunch", 0, 0, 0, 0);
