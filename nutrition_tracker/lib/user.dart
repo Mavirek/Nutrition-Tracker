@@ -98,9 +98,9 @@ class User {
       "Current Weight": _currentWeight,
       "Goal": goal,
       "Metric": metric,
-      "Archive Weight": _archiveWeight.map<String, dynamic>(
+      "Archive Weight": _archiveWeight.map<dynamic, dynamic>(
         (DateTime key, int value) {
-          return new MapEntry<String, dynamic>(key.millisecondsSinceEpoch.toString(), value);
+          return new MapEntry<dynamic, dynamic>(key.millisecondsSinceEpoch.toString(), value);
         }
       ),
       "Daily Calories": _cal.toJSON()
