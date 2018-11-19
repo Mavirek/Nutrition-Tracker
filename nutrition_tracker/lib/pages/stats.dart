@@ -22,7 +22,7 @@ class StatsPage extends StatelessWidget {
         appBar: new AppBar(
           title: Text('User Statistics'),
         ),
-        body: new Column(
+        body: new ListView(
           children: <Widget>[
             new SizedBox(height: 75.0,),
             new Row(
