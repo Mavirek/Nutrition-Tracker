@@ -30,7 +30,7 @@ class StatsPage extends StatelessWidget {
         appBar: new AppBar(
           title: Text('User Statistics'),
         ),
-        body: new Column(
+        body: new ListView(
           children: <Widget>[
             new SizedBox(height: 75.0,),
             new Row(
@@ -104,7 +104,7 @@ class StatsPage extends StatelessWidget {
         new FlatButton(
             onPressed: () {
               user.updateCurrentHeight(int.parse(control.text));
-              reference.child(user.displayName).set(user.toJson());
+              //reference.child(user.displayName).set(user.toJson());
               Navigator.of(context, rootNavigator: true).pop();
             },
             child: Text('Save')
@@ -142,7 +142,7 @@ class StatsPage extends StatelessWidget {
         new FlatButton(
           onPressed: () {
             user.currentWeight = int.parse(control.text);
-            reference.child(user.displayName).set(user.toJson());
+            //reference.child(user.displayName).set(user.toJson());
             Navigator.of(context, rootNavigator: true).pop();
           },
           child: Text('Save')
@@ -180,7 +180,7 @@ class StatsPage extends StatelessWidget {
         new FlatButton(
             onPressed: () {
               user.updateGoal(int.parse(control.text));
-              reference.child(user.displayName).set(user.toJson());
+              //reference.child(user.displayName).set(user.toJson());
               Navigator.of(context, rootNavigator: true).pop();
             },
             child: Text('Save')
