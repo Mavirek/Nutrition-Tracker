@@ -19,11 +19,13 @@ class User {
 
   User.fromExisting(this._currentHeight, this._currentWeight, this._archiveWeight, this.goal, this.metric, this._cal);
 
-  User.fromJSON(String name, Map<String, dynamic> map) :
+  User.fromJSON(String name, Map<dynamic, dynamic> map) :
       displayName = name,
       _currentHeight = map["Current Height"],
       _currentWeight = map["Current Weight"],
-      _archiveWeight = map["Archive Weight"].map(),
+      _archiveWeight = map["Archive Weight"] != null ? map["Archive Weight"].map<DateTime, int>((dynamic k, dynamic value) {
+        new MapEntry<DateTime, int>(DateTime.fromMillisecondsSinceEpoch(int.parse(k)), value);
+      }) : new Map<DateTime, int>(),
       goal = map["Goal"],
       metric = map["Metric"],
       _cal = map["Daily Calories"] != "empty" ? new DailyCal.fromJSON(map["DailyCalories"]) : new DailyCal.fromScratch();
