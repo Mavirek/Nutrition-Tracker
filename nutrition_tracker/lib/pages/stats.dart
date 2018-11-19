@@ -15,6 +15,7 @@ class StatsPage extends StatelessWidget {
     reference.child(user.displayName).set(user.toJson());
     userUpdate();
     Navigator.of(context).pop(true);
+    return true;
   }
 
   Widget build(BuildContext context){
