@@ -21,6 +21,7 @@ class HomePage extends StatelessWidget {
 
   HomePage (this._currentUser, this._googleSignIn){
     _userFuture = reference.child(_currentUser.displayName).once();
+    print('Home Constructor Called');
     //Text Code for Home Screen Stuff. Can be ignored.
 //    FoodItem fd1 = new FoodItem("Breakfast", 0, 0, 0, 0);
 //    FoodItem fd2 = new FoodItem("Lunch", 0, 0, 0, 0);
@@ -91,9 +92,12 @@ class HomePage extends StatelessWidget {
                         if (snapshot.data.value == null) {
                           _user = new User.fromScratch();
                           _user.displayName = _currentUser.displayName;
-                        } else
+                          print("User from SCRATCH called!!!!!!!!!!");
+                        } else {
                           _user = new User.fromJSON(
                               _currentUser.displayName, snapshot.data.value);
+                          print("User from JSON called!!!!!!!!!!");
+                        }
                         categorizedList = _user.dailyCal.getCategorizedList();
                       }
                       return buildBody();
@@ -175,9 +179,11 @@ class HomePage extends StatelessWidget {
             title: Text('View Statistics Page'),
             onTap: (){
               Navigator.of(context).push(new PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => StatsPage(_user, (User u) {
-                    _user = u;
-                  })
+                pageBuilder: (_, __, ___) => StatsPage(_user, (User u) async {
+                  print("Passed Back User: " + u.toJson().toString());
+                  print("Home page User: " + _user.toJson().toString());
+                  _user = u;
+                })
               ));
             },
           ),

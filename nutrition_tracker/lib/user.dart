@@ -19,6 +19,8 @@ class User {
 
   User.fromExisting(this._currentHeight, this._currentWeight, this._archiveWeight, this.goal, this.metric, this._cal);
 
+
+
   User.fromJSON(String name, Map<dynamic, dynamic> map) :
       displayName = name,
       _currentHeight = map["Current Height"],

@@ -9,6 +9,7 @@ class DailyCal {
 
   DailyCal.fromExisting(this.items);
 
+
   DailyCal.fromJSON(Map<dynamic, dynamic> json) {
     items = json.map<DateTime, List<FoodItem>>((dynamic key, dynamic value) {
         DateTime time = DateTime.fromMillisecondsSinceEpoch(int.parse(key));

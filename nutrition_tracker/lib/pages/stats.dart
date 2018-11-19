@@ -8,12 +8,17 @@ class StatsPage extends StatelessWidget {
   Function userUpdate;
   final reference = FirebaseDatabase.instance.reference();
 
-  StatsPage(this.user, this.userUpdate);
+  StatsPage(User user, Function userUpdate) {
+    print("Passing back User in Stats Constructor: " + user.toJson().toString());
+    this.user = user;
+    this.userUpdate = userUpdate;
+  }
 
   Future<bool> _back(BuildContext context) async{
     //Will need to write User object to firebase before going back!!
     reference.child(user.displayName).set(user.toJson());
-    userUpdate();
+    print("Passing back User: " + user.toJson().toString());
+    userUpdate(user);
     Navigator.of(context).pop(true);
     return true;
   }
@@ -99,6 +104,7 @@ class StatsPage extends StatelessWidget {
         new FlatButton(
             onPressed: () {
               user.updateCurrentHeight(int.parse(control.text));
+              reference.child(user.displayName).set(user.toJson());
               Navigator.of(context, rootNavigator: true).pop();
             },
             child: Text('Save')
@@ -136,6 +142,7 @@ class StatsPage extends StatelessWidget {
         new FlatButton(
           onPressed: () {
             user.currentWeight = int.parse(control.text);
+            reference.child(user.displayName).set(user.toJson());
             Navigator.of(context, rootNavigator: true).pop();
           },
           child: Text('Save')
@@ -173,6 +180,7 @@ class StatsPage extends StatelessWidget {
         new FlatButton(
             onPressed: () {
               user.updateGoal(int.parse(control.text));
+              reference.child(user.displayName).set(user.toJson());
               Navigator.of(context, rootNavigator: true).pop();
             },
             child: Text('Save')
