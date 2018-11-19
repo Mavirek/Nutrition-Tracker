@@ -71,6 +71,7 @@ class HomePage extends StatelessWidget {
                           _user = new User.fromJSON(
                               _currentUser.displayName, snapshot.data.value);
                         categorizedList = _user.dailyCal.getCategorizedList();
+                        print("categorizedList size = "+categorizedList[0].length.toString());
                       }
                       return buildDrawer(context);
                     } else if (snapshot.hasError) {
@@ -96,6 +97,7 @@ class HomePage extends StatelessWidget {
                           _user = new User.fromJSON(
                               _currentUser.displayName, snapshot.data.value);
                         categorizedList = _user.dailyCal.getCategorizedList();
+                        print("categorizedList size = "+categorizedList[0].length.toString());
                       }
                       return buildBody();
                     } else if (snapshot.hasError) {

@@ -8,7 +8,7 @@ class FoodItem {
 
 	FoodItem(this.name, this.calories, this.carbs, this.fat, this.protein);
 
-	FoodItem.fromJSON(Map<String, dynamic> json) :
+	FoodItem.fromJSON(Map<dynamic, dynamic> json) :
 			name = json["Name"],
 			calories = json["Calories"],
 			carbs = json["Carbs"],
@@ -24,7 +24,7 @@ class FoodItem {
 	}
 
 	void setCategory(String category){
-	  this.category = category;
+	  this.category = category.toUpperCase();
   }
 
   String getCategory(){

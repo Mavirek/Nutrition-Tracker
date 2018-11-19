@@ -4,6 +4,8 @@ import 'nutrition_facts.dart';
 import 'package:nutrition_tracker/fooditem.dart';
 import 'package:nutrition_tracker/user.dart';
 import 'package:nutrition_tracker/pages/category.dart';
+import 'package:firebase_database/firebase_database.dart';
+
 
 class SearchResultsPage extends StatefulWidget {
   final int numItems;
@@ -12,7 +14,8 @@ class SearchResultsPage extends StatefulWidget {
   final String category;
   final List<FoodItem> foodList;
   final bool isNND;
-  
+
+
   SearchResultsPage({Key key, @required this.items, @required this.numItems, @required this.user, @required this.category, @required this.foodList, @required this.isNND}) : super(key: key);
   @override
   _SearchResultsPageState createState() => new _SearchResultsPageState();
@@ -20,7 +23,7 @@ class SearchResultsPage extends StatefulWidget {
 
 class _SearchResultsPageState extends State<SearchResultsPage> {
   int radiovalue1 = 0;
-
+  final reference = FirebaseDatabase.instance.reference();
   NNDCommunicator nnd = new NNDCommunicator("rzS3XGZhYjJWf9KBj4mwNYCzhQ4XqF2Y0qi7TjW2");
 
   Future<bool> _back(BuildContext context) async{
@@ -104,6 +107,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
                     child: new Text('ADD'),
                     onPressed: () async {
                       await user.addTodaysCal(ft);
+                      reference.child(user.displayName).set(user.toJson());
                       Navigator.of(context, rootNavigator: true).pop(user);
                     },
                   )

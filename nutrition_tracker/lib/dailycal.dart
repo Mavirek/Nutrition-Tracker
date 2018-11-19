@@ -3,6 +3,7 @@ import "fooditem.dart";
 class DailyCal {
   Map<DateTime, List<FoodItem>> items;
 
+
   DailyCal.fromScratch() {
     items = new Map<DateTime, List<FoodItem>>();
   }
@@ -13,7 +14,8 @@ class DailyCal {
     items = json.map<DateTime, List<FoodItem>>((dynamic key, dynamic value) {
         DateTime time = DateTime.fromMillisecondsSinceEpoch(int.parse(key));
         List<FoodItem> list = new List<FoodItem>();
-        value.values.forEach((v) => list.add(new FoodItem.fromJSON(v)));
+        print("is value map = "+(value is Map).toString());
+        value.forEach((v) => list.add(new FoodItem.fromJSON(v)));
         return MapEntry<DateTime, List<FoodItem>>(time, list);
       }
     );
