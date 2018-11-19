@@ -1,5 +1,6 @@
 import "dailycal.dart";
 import "fooditem.dart";
+import 'package:firebase_database/firebase_database.dart';
 
 class User {
   int _currentHeight, _currentWeight, goal;
@@ -24,11 +25,12 @@ class User {
       _currentHeight = map["Current Height"],
       _currentWeight = map["Current Weight"],
       _archiveWeight = map["Archive Weight"] != null ? map["Archive Weight"].map<DateTime, int>((dynamic k, dynamic value) {
-        new MapEntry<DateTime, int>(DateTime.fromMillisecondsSinceEpoch(int.parse(k)), value);
+        print(k+ ", " + value.toString());
+        return new MapEntry<DateTime, int>(DateTime.fromMillisecondsSinceEpoch(1542651703458), value);
       }) : new Map<DateTime, int>(),
       goal = map["Goal"],
       metric = map["Metric"],
-      _cal = map["Daily Calories"] != "empty" ? new DailyCal.fromJSON(map["DailyCalories"]) : new DailyCal.fromScratch();
+      _cal = map["Daily Calories"] != "empty" ? new DailyCal.fromJSON(map["Daily Calories"]) : new DailyCal.fromScratch();
 
   get currentHeight => _currentHeight;
   get archiveWeight => _archiveWeight;
