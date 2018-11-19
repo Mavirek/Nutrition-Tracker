@@ -25,8 +25,7 @@ class User {
       _currentHeight = map["Current Height"],
       _currentWeight = map["Current Weight"],
       _archiveWeight = map["Archive Weight"] != null ? map["Archive Weight"].map<DateTime, int>((dynamic k, dynamic value) {
-        print(k+ ", " + value.toString());
-        return new MapEntry<DateTime, int>(DateTime.fromMillisecondsSinceEpoch(1542651703458), value);
+        return new MapEntry<DateTime, int>(DateTime.fromMillisecondsSinceEpoch(int.parse(k)), value);
       }) : new Map<DateTime, int>(),
       goal = map["Goal"],
       metric = map["Metric"],
