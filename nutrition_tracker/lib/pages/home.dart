@@ -21,7 +21,6 @@ class HomePage extends StatelessWidget {
 
   HomePage (this._currentUser, this._googleSignIn){
     _userFuture = reference.child(_currentUser.displayName).once();
-    reference.child(_currentUser.displayName).on
     //Text Code for Home Screen Stuff. Can be ignored.
 //    FoodItem fd1 = new FoodItem("Breakfast", 0, 0, 0, 0);
 //    FoodItem fd2 = new FoodItem("Lunch", 0, 0, 0, 0);
@@ -125,7 +124,7 @@ class HomePage extends StatelessWidget {
                   leading: GoogleUserCircleAvatar(identity: _currentUser),
                   isThreeLine: true,
                   title: Text(_currentUser.displayName, style: new TextStyle(color: Colors.white),),
-                  subtitle: new Text(_currentUser.email + '\nCalories: ' + _user.dailyCal.getTodaysCal().toString() , style: new TextStyle(color: Colors.white),),
+                  subtitle: new Text(_currentUser.email + '\nCalories: ' + _user.dailyCal.getTodaysCal().toString() + '\nGoal: ' + _user.goal.toString(), style: new TextStyle(color: Colors.white),),
                 ),
               ],
             ),
@@ -249,6 +248,7 @@ class HomePage extends StatelessWidget {
       ],
     );
   }
+
 
   void _showCategories(BuildContext context){
     var alert = new AlertDialog(

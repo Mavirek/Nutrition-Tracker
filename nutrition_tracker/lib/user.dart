@@ -3,16 +3,19 @@ import "fooditem.dart";
 import 'package:firebase_database/firebase_database.dart';
 
 class User {
-  int _currentHeight, _currentWeight, goal;
+  int _currentHeight, _currentWeight, age;
+  int goal;
   String displayName;
   Map<DateTime, int> _archiveWeight;
-  bool metric;
+  bool metric, sex;
   final DailyCal _cal;
   // Photo _currentPhoto, _previousPhoto
 
   User.fromScratch() :
         _currentHeight = 0,
         _currentWeight = 0,
+        age = 0,
+        sex = true,
         _archiveWeight = new Map<DateTime, int>(),
         goal = 0,
         metric = false,
@@ -22,6 +25,8 @@ class User {
 
   User.fromJSON(String name, Map<dynamic, dynamic> map) :
       displayName = name,
+      age = map["Age"],
+      sex = map["Sex"],
       _currentHeight = map["Current Height"],
       _currentWeight = map["Current Weight"],
       _archiveWeight = map["Archive Weight"] != null ? map["Archive Weight"].map<DateTime, int>((dynamic k, dynamic value) {
@@ -34,8 +39,10 @@ class User {
   get currentHeight => _currentHeight;
   get archiveWeight => _archiveWeight;
   set currentHeight(int newHeight) {
-    if (newHeight >= 0)
+    if (newHeight >= 0) {
       _currentHeight = newHeight;
+      goalCalculator();
+    }
     else
       throw new ArgumentError("Height should not be negative.");
   }
@@ -45,6 +52,7 @@ class User {
     if (newWeight >= 0) {
       _currentWeight = newWeight;
       archiveWeight[DateTime.now()] = newWeight;
+      goalCalculator();
     } else
       throw new ArgumentError("Weight should not be negative.");
   }
@@ -71,9 +79,29 @@ class User {
     return null;
   }
 
+  bool isMale(){
+    return sex;
+  }
+
+  void updateSex(bool sex){
+    this.sex = sex;
+    goalCalculator();
+  }
+
+  void updateAge(int newAge) {
+    if (newAge >= 0 ) {
+      age = newAge;
+      goalCalculator();
+    }
+    else
+      throw new ArgumentError("Age Should not be negative.");
+  }
+
   void updateCurrentHeight(int newHeight) {
-    if (newHeight >= 0)
+    if (newHeight >= 0) {
       _currentHeight = newHeight;
+      goalCalculator();
+    }
     else
       throw new ArgumentError("Height should not be negative.");
   }
@@ -82,6 +110,7 @@ class User {
     if (newWeight >= 0) {
       _currentWeight = newWeight;
       archiveWeight[DateTime.now()] = newWeight;
+      goalCalculator();
     } else
       throw new ArgumentError("Weight should not be negative.");
   }
@@ -93,8 +122,18 @@ class User {
       throw new ArgumentError("Goal should not be negative.");
   }
 
+  void goalCalculator(){
+    double weightKG = currentWeight * 0.453592;
+    if(isMale())
+      goal = ((weightKG * 10) + (6.25 * currentHeight) - (5 * age) + 5).round();
+    else
+      goal = ((weightKG * 10) + (6.25 * currentHeight) - (5 * age) - 161).round();
+  }
+
   toJson() {
     return {
+      "Age": age,
+      "Sex": sex,
       "Current Height": _currentHeight,
       "Current Weight": _currentWeight,
       "Goal": goal,
