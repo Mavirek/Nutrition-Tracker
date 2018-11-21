@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'auth/login.dart';
+import 'package:camera/camera.dart';
+import 'dart:async';
 
-void main() => runApp(new MyApp());
+List<CameraDescription> cameras;
+
+Future<Null> main() async {
+  cameras = await availableCameras();
+  runApp(new MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -9,7 +16,7 @@ class MyApp extends StatelessWidget {
     // TODO: implement build
     return new MaterialApp(
       title: 'Nutrition Tracker',
-      home: new LoginPage(),
+      home: new LoginPage(cameras),
     );
   }
 }

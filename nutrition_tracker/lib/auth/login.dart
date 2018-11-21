@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'dart:async';
 import 'package:nutrition_tracker/pages/home.dart';
+import 'package:camera/camera.dart';
 
 class LoginPage extends StatelessWidget {
+  List<CameraDescription> cameras;
+
+  LoginPage(this.cameras);
+
   final GoogleSignIn _googleSignIn = new GoogleSignIn(
     scopes: [
       'email',
@@ -17,7 +22,7 @@ class LoginPage extends StatelessWidget {
     try{
       await _googleSignIn.signIn().then((GoogleSignInAccount account){
         Navigator.push(context, new PageRouteBuilder(
-            pageBuilder: (_, __, ___) => HomePage(account, _googleSignIn)
+            pageBuilder: (_, __, ___) => HomePage(account, _googleSignIn, cameras)
           )
         );
       });

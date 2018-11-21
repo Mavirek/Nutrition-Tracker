@@ -8,18 +8,20 @@ import 'package:nutrition_tracker/user.dart';
 import 'package:nutrition_tracker/fooditem.dart';
 import 'stats.dart';
 import 'package:firebase_database/firebase_database.dart';
-
+import 'photo.dart';
+import 'package:camera/camera.dart';
 
 class HomePage extends StatelessWidget {
   GoogleSignInAccount _currentUser;
   GoogleSignIn _googleSignIn;
+  List<CameraDescription> cameras;
   Future<DataSnapshot> _userFuture;
   User _user;
   List<List<FoodItem>> categorizedList;
   final reference = FirebaseDatabase.instance.reference();
   final List<String> categories = ["Breakfast", "Lunch", "Snack", "Dinner"];
 
-  HomePage (this._currentUser, this._googleSignIn){
+  HomePage (this._currentUser, this._googleSignIn, this.cameras){
     _userFuture = reference.child(_currentUser.displayName).once();
     //Text Code for Home Screen Stuff. Can be ignored.
 //    FoodItem fd1 = new FoodItem("Breakfast", 0, 0, 0, 0);
@@ -178,6 +180,15 @@ class HomePage extends StatelessWidget {
             onTap: (){
               Navigator.of(context).push(new PageRouteBuilder(
                   pageBuilder: (_, __, ___) => StatsPage(_user)
+              ));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.photo),
+            title: Text('View Photo Page'),
+            onTap: (){
+              Navigator.of(context).push(new PageRouteBuilder(
+                  pageBuilder: (_, __, ___) => Photo(cameras)
               ));
             },
           ),
