@@ -8,8 +8,8 @@ import 'package:nutrition_tracker/user.dart';
 import 'package:nutrition_tracker/fooditem.dart';
 import 'stats.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'photo.dart';
 import 'package:camera/camera.dart';
+import 'picture.dart';
 
 class HomePage extends StatelessWidget {
   GoogleSignInAccount _currentUser;
@@ -188,7 +188,7 @@ class HomePage extends StatelessWidget {
             title: Text('View Photo Page'),
             onTap: (){
               Navigator.of(context).push(new PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => Photo(cameras)
+                  pageBuilder: (_, __, ___) => PicturePage(_user)
               ));
             },
           ),

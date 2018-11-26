@@ -1,5 +1,6 @@
 import "dailycal.dart";
 import "fooditem.dart";
+import 'dart:io';
 import 'package:firebase_database/firebase_database.dart';
 
 class User {
@@ -9,7 +10,7 @@ class User {
   Map<DateTime, int> _archiveWeight;
   bool metric, sex;
   final DailyCal _cal;
-  // Photo _currentPhoto, _previousPhoto
+  File _currentPhoto, _previousPhoto;
 
   User.fromScratch() :
         _currentHeight = 0,
@@ -34,6 +35,8 @@ class User {
       }) : new Map<DateTime, int>(),
       goal = map["Goal"],
       metric = map["Metric"],
+      _previousPhoto = File(map["Before"]),
+      _currentPhoto = File(map["After"]),
       _cal = map["Daily Calories"] != "empty" ? new DailyCal.fromJSON(map["Daily Calories"]) : new DailyCal.fromScratch();
 
   get currentHeight => _currentHeight;
@@ -60,14 +63,14 @@ class User {
   void setDisplayName(String name){
     displayName = name;
   }
-  /*
+
   get currentPhoto => _currentPhoto;
   get previousPhoto => _previousPhoto;
-  set currentPhoto(Photo newPhoto) {
+  set currentPhoto(File newPhoto) {
     _previousPhoto = previousPhoto;
     _currentPhoto = newPhoto;
   }
-  */
+
 
   get dailyCal => _cal;
   addTodaysCal(FoodItem item) {
@@ -81,6 +84,11 @@ class User {
 
   bool isMale(){
     return sex;
+  }
+
+  void updatePhoto(File newPhoto){
+    _previousPhoto = _currentPhoto;
+    _currentPhoto = newPhoto;
   }
 
   void updateSex(bool sex){
@@ -137,6 +145,8 @@ class User {
       "Current Height": _currentHeight,
       "Current Weight": _currentWeight,
       "Goal": goal,
+      "Before": previousPhoto.path,
+      "After": currentPhoto.path,
       "Metric": metric,
       "Archive Weight": _archiveWeight.map<dynamic, dynamic>(
         (DateTime key, int value) {

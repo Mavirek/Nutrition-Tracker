@@ -19,6 +19,9 @@ dependencies:
   #Camera
   camera:
 
+  #Image_picker
+  image_picker:
+
   #Firebase
   firebase_database: ^1.0.5
 
