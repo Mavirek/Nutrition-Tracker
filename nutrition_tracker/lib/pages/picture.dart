@@ -24,9 +24,14 @@ class _MyPicturePageState extends State<PicturePage>{
     setState(() {
       widget.user.updatePhoto(image);
       widget.reference.child(widget.user.displayName).set(widget.user.toJson());
-//      beforeImage = currentImage;
-//      currentImage = image;
     });
+  }
+
+  Widget imageWidget(String image, File file){
+    return file == null
+        ? new Text('No ' + image + ' image selected.',
+        style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic))
+        : new Image.file(file);
   }
 
   @override
@@ -40,15 +45,11 @@ class _MyPicturePageState extends State<PicturePage>{
           children: <Widget>[
             new Text('Before Image:', style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)),
             Center(
-              child: widget.user.previousPhoto == null
-                  ? new Text('No before image selected.', style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic))
-                  : new Image.file(widget.user.previousPhoto),
+              child: imageWidget('before', widget.user.previousPhoto),
             ),
             new Text('After Image: ', style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)),
             Center(
-              child: widget.user.currentPhoto == null
-                  ? new Text('No after image selected.', style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic))
-                  : new Image.file(widget.user.currentPhoto),
+              child: imageWidget('after', widget.user.currentPhoto),
             )
           ],
         )
