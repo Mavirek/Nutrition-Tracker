@@ -5,9 +5,7 @@ import 'package:nutrition_tracker/pages/home.dart';
 import 'package:camera/camera.dart';
 
 class LoginPage extends StatelessWidget {
-  List<CameraDescription> cameras;
-
-  LoginPage(this.cameras);
+  LoginPage();
 
   final GoogleSignIn _googleSignIn = new GoogleSignIn(
     scopes: [
@@ -22,7 +20,7 @@ class LoginPage extends StatelessWidget {
     try{
       await _googleSignIn.signIn().then((GoogleSignInAccount account){
         Navigator.push(context, new PageRouteBuilder(
-            pageBuilder: (_, __, ___) => HomePage(account, _googleSignIn, cameras)
+            pageBuilder: (_, __, ___) => HomePage(currentUser: account, googleSignIn: _googleSignIn,)
           )
         );
       });
