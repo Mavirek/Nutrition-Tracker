@@ -27,7 +27,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
   NNDCommunicator nnd = new NNDCommunicator("rzS3XGZhYjJWf9KBj4mwNYCzhQ4XqF2Y0qi7TjW2");
 
   Future<bool> _back(BuildContext context) async{
-    Navigator.of(context).pop(true);
+    return true;
   }
 
   @override

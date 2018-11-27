@@ -6,7 +6,7 @@ import 'package:nutrition_tracker/database/custom_list.dart';
 class CustomFoodItemPage extends StatelessWidget {
 
   Future<bool> _back(BuildContext context) async{
-    Navigator.of(context).pop(true);
+    return true;
   }
 
   @override

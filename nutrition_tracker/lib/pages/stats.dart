@@ -12,7 +12,7 @@ class StatsPage extends StatelessWidget {
   Future<bool> _back(BuildContext context) async{
     //Will need to write User object to firebase before going back!!
     await reference.child(user.displayName).set(user.toJson());
-    Navigator.of(context).pop(true);
+    return true;
   }
 
   Widget build(BuildContext context){
