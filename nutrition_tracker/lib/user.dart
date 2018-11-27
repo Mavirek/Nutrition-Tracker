@@ -15,6 +15,8 @@ class User {
   User.fromScratch() :
         _currentHeight = 0,
         _currentWeight = 0,
+        _currentPhoto = new File(""),
+        _previousPhoto = new File(""),
         age = 0,
         sex = true,
         _archiveWeight = new Map<DateTime, int>(),

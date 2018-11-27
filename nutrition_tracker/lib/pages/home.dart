@@ -16,7 +16,7 @@ class HomePage extends StatefulWidget {
   GoogleSignIn googleSignIn;
 
 
-  HomePage ({Key key, this.currentUser, this.googleSignIn}) : super(key: key);
+  HomePage ({Key key, @required this.currentUser, @required this.googleSignIn}) : super(key: key);
 
 
   _HomePage createState() => new _HomePage();
@@ -64,6 +64,7 @@ class _HomePage extends State<HomePage> {
 
 
   Widget build(BuildContext context) {
+    _userFuture = reference.child(_currentUser.displayName).once();
     // TODO: implement build
     return new MaterialApp(
         title: 'Home Page',
