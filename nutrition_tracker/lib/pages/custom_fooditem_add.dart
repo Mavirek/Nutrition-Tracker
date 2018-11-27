@@ -70,8 +70,8 @@ class CustomFoodState extends State<CustomFoodItemForm>{
     // TODO: implement build
     return new Form(
       key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ListView(
+        //crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           TextFormField(
             validator: (value) {
