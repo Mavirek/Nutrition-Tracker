@@ -10,7 +10,6 @@ import 'stats.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'picture.dart';
 import 'progress.dart';
-import 'test.dart';
 
 class HomePage extends StatefulWidget {
   GoogleSignInAccount currentUser;
@@ -156,7 +155,7 @@ class _HomePage extends State<HomePage> {
             title: Text('View Progress'),
             onTap: (){
               Navigator.of(context).push(new PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => MyHomePage(title: "test page")
+                  pageBuilder: (_, __, ___) => MyProgressPage( "test page", _user)
               )).then((result){
                 Navigator.of(context).pop();
               });

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nutrition_tracker/nndsearch.dart';
-import 'nutrition_facts.dart';
 import 'package:nutrition_tracker/fooditem.dart';
 import 'package:nutrition_tracker/user.dart';
-import 'package:nutrition_tracker/pages/category.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 
