@@ -155,7 +155,7 @@ class _HomePage extends State<HomePage> {
             title: Text('View Progress'),
             onTap: (){
               Navigator.of(context).push(new PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => MyProgressPage( "test page", _user)
+                  pageBuilder: (_, __, ___) => MyProgressPage( "Progress", _user)
               )).then((result){
                 Navigator.of(context).pop();
               });
