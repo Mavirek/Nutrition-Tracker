@@ -8,8 +8,9 @@ import 'package:nutrition_tracker/user.dart';
 import 'package:nutrition_tracker/fooditem.dart';
 import 'stats.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:camera/camera.dart';
 import 'picture.dart';
+import 'progress.dart';
+import 'test.dart';
 
 class HomePage extends StatefulWidget {
   GoogleSignInAccount currentUser;
@@ -154,10 +155,11 @@ class _HomePage extends State<HomePage> {
             leading: Icon(Icons.timeline),
             title: Text('View Progress'),
             onTap: (){
-              //            Navigator.of(context).push(new PageRouteBuilder(
-              //                pageBuilder: (_, __, ___) => SearchPage()
-              //            )
-              //            );
+              Navigator.of(context).push(new PageRouteBuilder(
+                  pageBuilder: (_, __, ___) => MyHomePage(title: "test page")
+              )).then((result){
+                Navigator.of(context).pop();
+              });
             },
           ),
           ListTile(
@@ -178,7 +180,9 @@ class _HomePage extends State<HomePage> {
               Navigator.of(context).push(new PageRouteBuilder(
                   pageBuilder: (_, __, ___) => CustomFoodItemPage()
               )
-              );
+              ).then((result){
+                Navigator.of(context).pop();
+              });
             },
           ),
           ListTile(
@@ -187,7 +191,9 @@ class _HomePage extends State<HomePage> {
             onTap: (){
               Navigator.of(context).push(new PageRouteBuilder(
                   pageBuilder: (_, __, ___) => CustomListPage()
-              ));
+              )).then((result){
+                Navigator.of(context).pop();
+              });
             },
           ),
           ListTile(
@@ -196,7 +202,9 @@ class _HomePage extends State<HomePage> {
             onTap: (){
               Navigator.of(context).push(new PageRouteBuilder(
                   pageBuilder: (_, __, ___) => StatsPage(_user)
-              ));
+              )).then((result){
+                Navigator.of(context).pop();
+              });
             },
           ),
           ListTile(
@@ -205,7 +213,9 @@ class _HomePage extends State<HomePage> {
             onTap: (){
               Navigator.of(context).push(new PageRouteBuilder(
                   pageBuilder: (_, __, ___) => PicturePage(_user)
-              ));
+              )).then((result){
+                Navigator.of(context).pop();
+              });
             },
           ),
         ],
@@ -324,6 +334,7 @@ class _HomePage extends State<HomePage> {
                       )
                       ).then((result){
                         updateCategories(context);
+                        Navigator.of(context).pop();
                       });
                       //categorizedList = _user.dailyCal.getCategorizedList();
                     },
