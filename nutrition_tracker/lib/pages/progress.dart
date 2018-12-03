@@ -149,8 +149,8 @@ class _MyProgressPageState extends State<MyProgressPage> {
         title: new Text(widget.title),
       ),
       body: new Center(
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+        child: new ListView(
+          //mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             chartWidget,
             chartWidget2

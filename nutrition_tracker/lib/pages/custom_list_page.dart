@@ -32,16 +32,17 @@ class CustomListPage extends StatelessWidget {
                 return new ListView.builder(
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, index) {
-                    return new Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        new Text(snapshot.data[index].name),
-                        new Text(snapshot.data[index].calories.toString()),
-                        new Text(snapshot.data[index].getMacros()[0].toString()),
-                        new Text(snapshot.data[index].getMacros()[1].toString()),
-                        new Text(snapshot.data[index].getMacros()[2].toString()),
-                        new Divider()
-                      ],
+                    return new Card(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+
+                            ListTile(
+                              title: new Text(snapshot.data[index].name),
+                              subtitle: new Text(snapshot.data[index].calories.toString()+ "\n"+snapshot.data[index].getMacros()[0].toString()+"\n"+snapshot.data[index].getMacros()[1].toString()+"\n"+snapshot.data[index].getMacros()[2].toString()),
+                            ),
+                          ],
+                        ),
                     );
                   },
                 );

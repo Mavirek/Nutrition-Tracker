@@ -35,6 +35,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
     NNDSearchResults items = widget.items;
     String category = widget.category;
     List<FoodItem> customFoods = widget.foodList;
+
     return new WillPopScope(
       onWillPop: () => _back(context),
       child: Scaffold(
@@ -46,41 +47,55 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
           itemBuilder: (BuildContext context, int index) {
             if(widget.isNND)
             {
-              return new ListTile(
-                title: new Text(items.getItem(index).name),
-                subtitle: new Text(items.getItem(index).group + "\n"+items.getItem(index).dataSource+"\n"+'${items.getItem(index).ndbno}'+"\n"+items.getItem(index).manufacturer),
-                enabled: true,
-                onTap: () async {
-                  FoodItem food = await nnd.getItem(items.getItem(index).ndbno);
-                  food.setCategory(category);
+              return new Card(
+                child: Column(
+                children: <Widget>[
+                    ListTile(
+                    title: new Text(items.getItem(index).name),
+                    subtitle: new Text(items.getItem(index).group + "\n"+items.getItem(index).manufacturer),
+                    enabled: true,
+                    onTap: () async {
+                      FoodItem food = await nnd.getItem(items.getItem(index).ndbno);
+                      food.setCategory(category);
 
-                  _showFacts(context, food, user);
-                  //Category(food: food, user: user);
-                  //await NutritionFactsPage.setFood(nnd, items.getItem(index).ndbno);
-                  //Navigator.of(context).push(new PageRouteBuilder(pageBuilder: (_, __, ___) => NutritionFactsPage()));
-                },
-              );
+                      _showFacts(context, food, user);
+                      //Category(food: food, user: user);
+                      //await NutritionFactsPage.setFood(nnd, items.getItem(index).ndbno);
+                      //Navigator.of(context).push(new PageRouteBuilder(pageBuilder: (_, __, ___) => NutritionFactsPage()));
+                      },
+                    ),
+                ],
+               ),
+            );
             }
             else
             {
-              return new ListTile(
-                title: new Text(customFoods[index].getName()),
-                subtitle: new Text("Calories: "+customFoods[index].getCalories().toString() + "\n"+"Carbs: "+customFoods[index].getCarbs().toString()+"\n"+"Protein: "+customFoods[index].getProtein().toString()+"\n"+"Fats: "+customFoods[index].getFat().toString()),
-                enabled: true,
-                onTap: () async {
-                  customFoods[index].setCategory(category);
+              return new Card(
+                  child: Column(
+                      children: <Widget>[
+                         ListTile(
+                            title: new Text(customFoods[index].getName()),
+                            subtitle: new Text("Calories: "+customFoods[index].getCalories().toString() + "\n"+"Carbs: "+customFoods[index].getCarbs().toString()+"\n"+"Protein: "+customFoods[index].getProtein().toString()+"\n"+"Fats: "+customFoods[index].getFat().toString()),
+                            enabled: true,
+                            onTap: () async {
+                              customFoods[index].setCategory(category);
 
-                  _showFacts(context, customFoods[index], user);
-                  //Category(food: food, user: user);
-                  //await NutritionFactsPage.setFood(nnd, items.getItem(index).ndbno);
-                  //Navigator.of(context).push(new PageRouteBuilder(pageBuilder: (_, __, ___) => NutritionFactsPage()));
-                },
+                              _showFacts(context, customFoods[index], user);
+                              //Category(food: food, user: user);
+                              //await NutritionFactsPage.setFood(nnd, items.getItem(index).ndbno);
+                              //Navigator.of(context).push(new PageRouteBuilder(pageBuilder: (_, __, ___) => NutritionFactsPage()));
+                            },
+                          ),
+                      ],
+                  ),
               );
             }
           },
         )
       ),
     );
+
+
   }
 
   void _showFacts(BuildContext context, FoodItem ft, User user){
