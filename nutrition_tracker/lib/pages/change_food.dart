@@ -117,7 +117,42 @@ class ChangeFoodPageState extends State<ChangeFoodPage> {
   }
 
   void addCalories(BuildContext context, DateTime day) {
-    
+    GlobalKey<FormState> formKey = new GlobalKey<FormState>();
+    TextFormField calorieInput = TextFormField(
+      keyboardType: TextInputType.number,
+      validator: (input) {
+        try {
+          final int parsed = int.parse(input);
+        } catch (e) {
+          return "Calories must be a positive whole number.";
+        }
+        return null;
+      }
+    );
+    AlertDialog dialog = AlertDialog(
+      title: Text("Enter your number of calories"),
+      content: new Form(
+        key: formKey,
+        child: calorieInput
+      ),
+      actions: <Widget>[
+        FlatButton(
+          child: Text('Add'),
+          onPressed: () {
+            if (formKey.currentState.validate()) {
+              print("Validated successfully");
+            } else
+              print("Validation failed.");
+            Navigator.of(context, rootNavigator: true).pop();
+          }
+        ),
+        FlatButton(
+          child: Text('Cancel'),
+          onPressed: () => Navigator.of(context, rootNavigator: true).pop()
+        )
+      ]
+    );
+    showDialog(context: context, builder: (context) => dialog);
   }
 
 }
