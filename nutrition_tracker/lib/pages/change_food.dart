@@ -43,9 +43,9 @@ class ChangeFoodPage extends StatelessWidget {
               shrinkWrap: true,
             ),
             floatingActionButton: FloatingActionButton.extended(
-              onPressed: () => print("Add button works"),
-              icon: Icon(Icons.add),
-              label: Text("Add missing food")
+                onPressed: () => print("Add button works"),
+                icon: Icon(Icons.add),
+                label: Text("Add missing food")
             )
         )
     );
@@ -59,7 +59,7 @@ class ChangeFoodPage extends StatelessWidget {
           trailing: IconButton(
             icon: new Icon(Icons.clear),
             tooltip: 'Remove food item',
-            onPressed: () => print("Remove button works"),
+            onPressed: () => removeFoodItem(context, day, item),
           )
       );
     }).toList() : [];
@@ -78,5 +78,22 @@ class ChangeFoodPage extends StatelessWidget {
       children: listChildren,
       shrinkWrap: true,
     );
+  }
+
+  void removeFoodItem(BuildContext context, DateTime day, FoodItem item) {
+    AlertDialog dialog = AlertDialog(
+        title: Text('Are you sure you want to remove ' + item.name + "?"),
+        actions: <Widget>[
+          FlatButton(
+              child: Text('Yes'),
+              onPressed: () => Navigator.of(context, rootNavigator: true).pop()
+          ),
+          FlatButton(
+              child: Text('No'),
+              onPressed: () => Navigator.of(context, rootNavigator: true).pop()
+          )
+        ]
+    );
+    showDialog(context: context, builder: (context) => dialog);
   }
 }
