@@ -41,6 +41,11 @@ class ChangeFoodPage extends StatelessWidget {
                 buildDayList(context, today.subtract(Duration(days: 6))),
               ],
               shrinkWrap: true,
+            ),
+            floatingActionButton: FloatingActionButton.extended(
+              onPressed: () => print("Add button works"),
+              icon: Icon(Icons.add),
+              label: Text("Add missing food")
             )
         )
     );
@@ -51,14 +56,21 @@ class ChangeFoodPage extends StatelessWidget {
     List<ListTile> foodRows = foodItems != null ? foodItems.map((item) {
       return new ListTile(
           title: new Text(item.name),
-          trailing: new Icon(Icons.clear)
+          trailing: IconButton(
+            icon: new Icon(Icons.clear),
+            tooltip: 'Remove food item',
+            onPressed: () => print("Remove button works"),
+          )
       );
     }).toList() : [];
     List<Widget> listChildren = <Widget>[
       new Text(
           new DateFormat.MMMMd().format(day),
           textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0)
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20.0
+          )
       ),
     ];
     listChildren.addAll(foodRows);
