@@ -205,8 +205,9 @@ class _HomePage extends State<HomePage> {
             title: Text('Change Food'),
             onTap: () {
               Navigator.of(context).push(new PageRouteBuilder(
-                pageBuilder: (_, __, ___) => ChangeFoodPage(_user)
+                pageBuilder: (_, __, ___) => ChangeFoodPage(user: _user)
               )).then((result){
+                updateCategories(context);
                 Navigator.of(context).pop();
               });
             },

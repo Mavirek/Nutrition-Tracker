@@ -6,21 +6,29 @@ import 'package:nutrition_tracker/user.dart';
 import 'package:nutrition_tracker/fooditem.dart';
 import 'package:nutrition_tracker/dailycal.dart';
 
-class ChangeFoodPage extends StatelessWidget {
+class ChangeFoodPage extends StatefulWidget {
+  User user;
+
+  ChangeFoodPage({Key key, @required this.user}) :
+        super(key: key);
+
+  ChangeFoodPageState createState() => new ChangeFoodPageState();
+}
+
+class ChangeFoodPageState extends State<ChangeFoodPage> {
   User _user;
   final reference = FirebaseDatabase.instance.reference();
-  final DateTime today;
+  DateTime today;
 
-  ChangeFoodPage(this._user) :
-        today = _stripTime(DateTime.now());
+  @override
+  void initState() {
+    super.initState();
+    _user = widget.user;
+    today = _stripTime(DateTime.now());
+  }
 
   static DateTime _stripTime(DateTime dt) {
     return new DateTime(dt.year, dt.month, dt.day);
-  }
-
-  Future<bool> _back(BuildContext context) async {
-    await reference.child(_user.displayName).set(_user.toJson());
-    return true;
   }
 
   Widget build(BuildContext context) {
@@ -49,6 +57,11 @@ class ChangeFoodPage extends StatelessWidget {
             )
         )
     );
+  }
+
+  Future<bool> _back(BuildContext context) async {
+    await reference.child(_user.displayName).set(_user.toJson());
+    return true;
   }
 
   buildDayList(BuildContext context, DateTime day) {
@@ -86,7 +99,10 @@ class ChangeFoodPage extends StatelessWidget {
         actions: <Widget>[
           FlatButton(
               child: Text('Yes'),
-              onPressed: () => Navigator.of(context, rootNavigator: true).pop()
+              onPressed: () {
+                _user.dailyCal.items[day].remove(item);
+                Navigator.of(context, rootNavigator: true).pop();
+              }
           ),
           FlatButton(
               child: Text('No'),
