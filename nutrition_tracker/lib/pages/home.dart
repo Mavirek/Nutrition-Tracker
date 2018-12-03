@@ -88,6 +88,8 @@ class _HomePage extends State<HomePage> {
                           _user = new User.fromJSON(
                               _currentUser.displayName, snapshot.data.value);
                         categorizedList = _user.dailyCal.getCategorizedList();
+                        print(_user);
+                        print("Weekly Calories: " + _user.weeklyCal.toString());
                         print("categorizedList size = "+categorizedList[0].length.toString());
                       }
                       return buildDrawer(context);
@@ -114,6 +116,8 @@ class _HomePage extends State<HomePage> {
                           _user = new User.fromJSON(
                               _currentUser.displayName, snapshot.data.value);
                         categorizedList = _user.dailyCal.getCategorizedList();
+                        print(_user);
+                        print("Weekly Calories: " + _user.weeklyCal.toString());
                         print("categorizedList size = "+categorizedList[0].length.toString());
                       }
                       return buildBody();
