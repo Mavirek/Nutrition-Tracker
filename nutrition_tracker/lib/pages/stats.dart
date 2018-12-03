@@ -91,9 +91,9 @@ class StatsPage extends StatelessWidget {
 
   Widget sex() {
     if(user.isMale()){
-      return new Text("You are sex is Male.", style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),);
+      return new Text("Your sex is Male.", style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),);
     }
-    return new Text("You are sex is Female.", style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),);
+    return new Text("Your sex is Female.", style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),);
   }
 
   void _showSexDialog(BuildContext context){
