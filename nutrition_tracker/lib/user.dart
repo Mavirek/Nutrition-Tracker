@@ -36,7 +36,9 @@ class User {
       _cal = map["Daily Calories"] != "empty" ? new DailyCal.fromJSON(map["Daily Calories"]) : new DailyCal.fromScratch(),
       _weeklyCal = map["Weekly Calories"] != null ? map["Weekly Calories"].map<DateTime, int>((dynamic k, dynamic value) {
         return new MapEntry<DateTime, int>(DateTime.fromMillisecondsSinceEpoch(int.parse(k)), value);
-      }) : new Map<DateTime, int>();
+      }) : new Map<DateTime, int>() {
+    _cleanByWeek();
+  }
 
   get currentHeight => _currentHeight;
   get archiveWeight => _archiveWeight;
@@ -115,5 +117,32 @@ class User {
       ),
       "Daily Calories": _cal.toJSON()
     };
+  }
+
+  DateTime _stripTime(DateTime dt) {
+    return new DateTime(dt.year, dt.month, dt.day);
+  }
+
+  void _cleanByWeek() {
+    DateTime today = _stripTime(DateTime.now());
+    DateTime weekStart = today.subtract(new Duration(days: today.weekday));
+    Map<DateTime, List<FoodItem>> removed = Map<DateTime, List<FoodItem>>.fromEntries(
+      _cal.items.entries.where((e) => e.key.isBefore(weekStart))
+    );
+    _cal.items.removeWhere((key, value) => key.isBefore(weekStart));
+
+    Map<DateTime, int> dailyTotals = removed.map<DateTime, int>((key, value) {
+      int total = 0;
+      value.forEach((item) => total += item.calories);
+      return MapEntry<DateTime, int>(key, total);
+    });
+
+    dailyTotals.forEach((key, value) {
+      DateTime newKey = key.subtract(new Duration(days: key.weekday));
+      if (_weeklyCal.containsKey(newKey))
+        _weeklyCal[newKey] += value;
+      else
+        _weeklyCal[newKey] = value;
+    });
   }
 }
