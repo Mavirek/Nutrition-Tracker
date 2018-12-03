@@ -2,10 +2,13 @@ import "dailycal.dart";
 import "fooditem.dart";
 import 'package:firebase_database/firebase_database.dart';
 
+const int MICROSECONDS_PER_DAY = 86400000000;
+
 class User {
   int _currentHeight, _currentWeight, goal;
   String displayName;
   Map<DateTime, int> _archiveWeight;
+  Map<DateTime, int> _weeklyCal;
   bool metric;
   final DailyCal _cal;
   // Photo _currentPhoto, _previousPhoto
@@ -16,7 +19,8 @@ class User {
         _archiveWeight = new Map<DateTime, int>(),
         goal = 0,
         metric = false,
-        _cal = new DailyCal.fromScratch();
+        _cal = new DailyCal.fromScratch(),
+        _weeklyCal = new Map<DateTime, int>();
 
   User.fromExisting(this._currentHeight, this._currentWeight, this._archiveWeight, this.goal, this.metric, this._cal);
 
@@ -29,7 +33,10 @@ class User {
       }) : new Map<DateTime, int>(),
       goal = map["Goal"],
       metric = map["Metric"],
-      _cal = map["Daily Calories"] != "empty" ? new DailyCal.fromJSON(map["Daily Calories"]) : new DailyCal.fromScratch();
+      _cal = map["Daily Calories"] != "empty" ? new DailyCal.fromJSON(map["Daily Calories"]) : new DailyCal.fromScratch(),
+      _weeklyCal = map["Weekly Calories"] != null ? map["Weekly Calories"].map<DateTime, int>((dynamic k, dynamic value) {
+        return new MapEntry<DateTime, int>(DateTime.fromMillisecondsSinceEpoch(int.parse(k)), value);
+      }) : new Map<DateTime, int>();
 
   get currentHeight => _currentHeight;
   get archiveWeight => _archiveWeight;
@@ -49,6 +56,8 @@ class User {
       throw new ArgumentError("Weight should not be negative.");
   }
 
+  get weeklyCal => _weeklyCal;
+
   void setDisplayName(String name){
     displayName = name;
   }
@@ -64,11 +73,6 @@ class User {
   get dailyCal => _cal;
   addTodaysCal(FoodItem item) {
     _cal.addFoodItem(item);
-  }
-
-  String toString() {
-    // TODO Unable to implement without knowing necessary REST JSON format
-    return null;
   }
 
   void updateCurrentHeight(int newHeight) {
@@ -103,6 +107,11 @@ class User {
         (DateTime key, int value) {
           return new MapEntry<dynamic, dynamic>(key.millisecondsSinceEpoch.toString(), value);
         }
+      ),
+      "Weekly Calories": _weeklyCal.map<dynamic, dynamic>(
+              (DateTime key, int value) {
+            return new MapEntry<dynamic, dynamic>(key.millisecondsSinceEpoch.toString(), value);
+          }
       ),
       "Daily Calories": _cal.toJSON()
     };
