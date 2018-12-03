@@ -35,21 +35,21 @@ class ChangeFoodPageState extends State<ChangeFoodPage> {
     return WillPopScope(
         onWillPop: () => _back(context),
         child: new Scaffold(
-            appBar: new AppBar(
-                title: Text("Change Foods")
-            ),
-            body: new ListView(
-              children: <Widget>[
-                buildDayList(context, today),
-                buildDayList(context, today.subtract(Duration(days: 1))),
-                buildDayList(context, today.subtract(Duration(days: 2))),
-                buildDayList(context, today.subtract(Duration(days: 3))),
-                buildDayList(context, today.subtract(Duration(days: 4))),
-                buildDayList(context, today.subtract(Duration(days: 5))),
-                buildDayList(context, today.subtract(Duration(days: 6))),
-              ],
-              shrinkWrap: true,
-            ),
+          appBar: new AppBar(
+              title: Text("Change Foods")
+          ),
+          body: new ListView(
+            children: <Widget>[
+              buildDayList(context, today),
+              buildDayList(context, today.subtract(Duration(days: 1))),
+              buildDayList(context, today.subtract(Duration(days: 2))),
+              buildDayList(context, today.subtract(Duration(days: 3))),
+              buildDayList(context, today.subtract(Duration(days: 4))),
+              buildDayList(context, today.subtract(Duration(days: 5))),
+              buildDayList(context, today.subtract(Duration(days: 6))),
+            ],
+            shrinkWrap: true,
+          ),
         )
     );
   }
@@ -73,19 +73,19 @@ class ChangeFoodPageState extends State<ChangeFoodPage> {
     }).toList() : [];
     List<Widget> listChildren = <Widget>[
       new ListTile(
-        title: new Text(
-            new DateFormat.MMMMd().format(day),
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20.0
-            )
-        ),
-        trailing: day != today ? IconButton(
-          icon: new Icon(Icons.add),
-          tooltip: 'Add calories',
-          onPressed: () => addCalories(context, day)
-        ) : null
+          title: new Text(
+              new DateFormat.MMMMd().format(day),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0
+              )
+          ),
+          trailing: day != today ? IconButton(
+              icon: new Icon(Icons.add),
+              tooltip: 'Add calories',
+              onPressed: () => addCalories(context, day)
+          ) : null
       )
     ];
     listChildren.addAll(foodRows);
@@ -118,39 +118,48 @@ class ChangeFoodPageState extends State<ChangeFoodPage> {
 
   void addCalories(BuildContext context, DateTime day) {
     GlobalKey<FormState> formKey = new GlobalKey<FormState>();
+    TextEditingController controller = new TextEditingController();
     TextFormField calorieInput = TextFormField(
-      keyboardType: TextInputType.number,
-      validator: (input) {
-        try {
-          final int parsed = int.parse(input);
-        } catch (e) {
-          return "Calories must be a positive whole number.";
+        keyboardType: TextInputType.number,
+        controller: controller,
+        validator: (input) {
+          try {
+            final int parsed = int.parse(input);
+          } catch (e) {
+            return "Calories must be a positive whole number.";
+          }
+          return null;
         }
-        return null;
-      }
     );
     AlertDialog dialog = AlertDialog(
-      title: Text("Enter your number of calories"),
-      content: new Form(
-        key: formKey,
-        child: calorieInput
-      ),
-      actions: <Widget>[
-        FlatButton(
-          child: Text('Add'),
-          onPressed: () {
-            if (formKey.currentState.validate()) {
-              print("Validated successfully");
-            } else
-              print("Validation failed.");
-            Navigator.of(context, rootNavigator: true).pop();
-          }
+        title: Text("Enter your number of calories"),
+        content: new Form(
+            key: formKey,
+            child: calorieInput
         ),
-        FlatButton(
-          child: Text('Cancel'),
-          onPressed: () => Navigator.of(context, rootNavigator: true).pop()
-        )
-      ]
+        actions: <Widget>[
+          FlatButton(
+              child: Text('Add'),
+              onPressed: () {
+                if (formKey.currentState.validate()) {
+                  _user.dailyCal.addFoodItemForDay(new FoodItem(
+                      "Manual Calorie Addition",
+                      int.parse(controller.text),
+                      0,
+                      0,
+                      0
+                  ), day);
+                  setState(() {});
+                } else
+                  print("Validation failed.");
+                Navigator.of(context, rootNavigator: true).pop();
+              }
+          ),
+          FlatButton(
+              child: Text('Cancel'),
+              onPressed: () => Navigator.of(context, rootNavigator: true).pop()
+          )
+        ]
     );
     showDialog(context: context, builder: (context) => dialog);
   }
