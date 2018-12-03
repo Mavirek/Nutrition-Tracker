@@ -6,6 +6,7 @@ import 'custom_fooditem_add.dart';
 import 'custom_list_page.dart';
 import 'package:nutrition_tracker/user.dart';
 import 'package:nutrition_tracker/fooditem.dart';
+import 'package:nutrition_tracker/pages/change_food.dart';
 import 'stats.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'picture.dart';
@@ -194,6 +195,17 @@ class _HomePage extends State<HomePage> {
             onTap: (){
               Navigator.of(context).push(new PageRouteBuilder(
                   pageBuilder: (_, __, ___) => CustomListPage()
+              )).then((result){
+                Navigator.of(context).pop();
+              });
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.fastfood),
+            title: Text('Change Food'),
+            onTap: () {
+              Navigator.of(context).push(new PageRouteBuilder(
+                pageBuilder: (_, __, ___) => ChangeFoodPage(_user)
               )).then((result){
                 Navigator.of(context).pop();
               });
