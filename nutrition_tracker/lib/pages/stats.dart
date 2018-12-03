@@ -11,8 +11,8 @@ class StatsPage extends StatelessWidget {
 
   Future<bool> _back(BuildContext context) async{
     //Will need to write User object to firebase before going back!!
-    reference.child(user.displayName).set(user.toJson());
-    Navigator.of(context).pop(true);
+    await reference.child(user.displayName).set(user.toJson());
+    return true;
   }
 
   Widget build(BuildContext context){
@@ -24,11 +24,22 @@ class StatsPage extends StatelessWidget {
         ),
         body: new ListView(
           children: <Widget>[
+            new Row(
+              children: <Widget>[
+                Expanded(
+                  child: new Text("Your Saved Age: " + user.age.toString() + ' Years', style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)),
+                ),
+                RaisedButton(
+                  child: Text("Update Age"),
+                  onPressed: () => _showAgeDialog(context),
+                ),
+              ],
+            ),
             new SizedBox(height: 75.0,),
             new Row(
               children: <Widget>[
                 Expanded(
-                  child: new Text("Your Saved Height: " + user.currentHeight.toString() + ' Ft', style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)),
+                  child: new Text("Your Saved Height: " + user.currentHeight.toString() + ' Cm', style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)),
                 ),
                 RaisedButton(
                   child: Text("Update Height"),
@@ -59,11 +70,104 @@ class StatsPage extends StatelessWidget {
                   onPressed: () => _showGoalDialog(context),
                 ),
               ],
+            ),
+            new SizedBox(height: 70.0,),
+            new Row(
+              children: <Widget>[
+                Expanded(
+                  child: sex(),//new Text("Your Saved Goal: " + user.goal.toString() + ' Calories Per Day', style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)),
+                ),
+                RaisedButton(
+                  child: Text("Update Sex"),
+                  onPressed: () => _showSexDialog(context),
+                ),
+              ],
             )
           ],
         ),
       )
     );
+  }
+
+  Widget sex() {
+    if(user.isMale()){
+      return new Text("You are sex is Male.", style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),);
+    }
+    return new Text("You are sex is Female.", style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic),);
+  }
+
+  void _showSexDialog(BuildContext context){
+    final control = TextEditingController();
+    var alert = new AlertDialog(
+      title: Text('Change Sex'),
+      content: TextFormField(
+        validator: (value) {
+          if(value.isEmpty){
+            return 'Please enter M for Male or F for Female';
+          }
+
+          final num = int.parse(value);
+          if(num != 1)
+            return '"$value" is not a valid value';
+          return null;
+        },
+        controller: control,
+        decoration: InputDecoration(
+            hintText: 'Please enter M for Male or F for Female'
+        ),
+      ),
+      actions: <Widget>[
+        new FlatButton(
+            onPressed: () {
+              user.updateSex(control.text.toString().toUpperCase() == 'M');
+              Navigator.of(context, rootNavigator: true).pop();
+            },
+            child: Text('Save')
+        )
+      ],
+    );
+
+    showDialog(context: context, builder: (context) => alert);
+  }
+
+  void _showAgeDialog(BuildContext context){
+    final control = TextEditingController();
+    var alert = new AlertDialog(
+      title: Text('Update Age'),
+      content: TextFormField(
+        validator: (value) {
+          if(value.isEmpty){
+            return 'Please enter some text';
+          }
+          try{
+            final num = int.parse(value);
+          }catch (e){
+            return '"$value" is not a valid number';
+          }
+
+          final num = int.parse(value);
+          if(num > 8 || num < 0)
+            return '"$value" is not a valid age';
+          return null;
+        },
+        controller: control,
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+            hintText: 'Enter Your age in Year'
+        ),
+      ),
+      actions: <Widget>[
+        new FlatButton(
+            onPressed: () {
+              user.updateAge(double.parse(control.text).round());
+              Navigator.of(context, rootNavigator: true).pop();
+            },
+            child: Text('Save')
+        )
+      ],
+    );
+
+    showDialog(context: context, builder: (context) => alert);
   }
 
   void _showHeightDialog(BuildContext context){
@@ -89,7 +193,7 @@ class StatsPage extends StatelessWidget {
         controller: control,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
-            hintText: 'Enter Your Height in Feet'
+            hintText: 'Enter Your Height in Centimeters'
         ),
       ),
       actions: <Widget>[
@@ -153,7 +257,7 @@ class StatsPage extends StatelessWidget {
             return 'Please enter some text';
           }
           try{
-            final num = int.parse(value);
+            final num = double.parse(value);
           }catch (e){
             return '"$value" is not a valid number';
           }

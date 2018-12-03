@@ -8,19 +8,18 @@ import 'package:nutrition_tracker/user.dart';
 import 'package:nutrition_tracker/fooditem.dart';
 import 'stats.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'picture.dart';
+import 'progress.dart';
+
+class HomePage extends StatefulWidget {
+  GoogleSignInAccount currentUser;
+  GoogleSignIn googleSignIn;
 
 
-class HomePage extends StatelessWidget {
-  GoogleSignInAccount _currentUser;
-  GoogleSignIn _googleSignIn;
-  Future<DataSnapshot> _userFuture;
-  User _user;
-  List<List<FoodItem>> categorizedList;
-  final reference = FirebaseDatabase.instance.reference();
-  final List<String> categories = ["Breakfast", "Lunch", "Snack", "Dinner"];
+  HomePage ({Key key, @required this.currentUser, @required this.googleSignIn}) : super(key: key);
 
-  HomePage (this._currentUser, this._googleSignIn){
-    _userFuture = reference.child(_currentUser.displayName).once();
+
+  _HomePage createState() => new _HomePage();
     //Text Code for Home Screen Stuff. Can be ignored.
 //    FoodItem fd1 = new FoodItem("Breakfast", 0, 0, 0, 0);
 //    FoodItem fd2 = new FoodItem("Lunch", 0, 0, 0, 0);
@@ -38,6 +37,24 @@ class HomePage extends StatelessWidget {
 //    user.dailyCal.addFoodItem(fd4);
 //    user.dailyCal.addFoodItem(fd5);
   }
+class _HomePage extends State<HomePage> {
+  //List<CameraDescription> cameras;
+  Future<DataSnapshot> _userFuture;
+  User _user;
+  List<List<FoodItem>> categorizedList;
+  final reference = FirebaseDatabase.instance.reference();
+  final List<String> categories = ["Breakfast", "Lunch", "Snack", "Dinner"];
+  GoogleSignInAccount _currentUser;
+  GoogleSignIn _googleSignIn;
+
+  @override
+  void initState()
+  {
+    super.initState();
+    _currentUser = widget.currentUser;
+    _googleSignIn = widget.googleSignIn;
+
+  }
 
   Future<Null> _handleSignOut(BuildContext context) async{
     //reference.child(_currentUser.displayName).set(_user.toJson());
@@ -47,6 +64,7 @@ class HomePage extends StatelessWidget {
 
 
   Widget build(BuildContext context) {
+    _userFuture = reference.child(_currentUser.displayName).once();
     // TODO: implement build
     return new MaterialApp(
         title: 'Home Page',
@@ -124,7 +142,7 @@ class HomePage extends StatelessWidget {
                   leading: GoogleUserCircleAvatar(identity: _currentUser),
                   isThreeLine: true,
                   title: Text(_currentUser.displayName, style: new TextStyle(color: Colors.white),),
-                  subtitle: new Text(_currentUser.email + '\nCalories: ' + _user.dailyCal.getTodaysCal().toString() , style: new TextStyle(color: Colors.white),),
+                  subtitle: new Text(_currentUser.email + '\nCalories: ' + _user.dailyCal.getTodaysCal().toString() + '\nGoal: ' + _user.goal.toString(), style: new TextStyle(color: Colors.white),),
                 ),
               ],
             ),
@@ -136,10 +154,11 @@ class HomePage extends StatelessWidget {
             leading: Icon(Icons.timeline),
             title: Text('View Progress'),
             onTap: (){
-              //            Navigator.of(context).push(new PageRouteBuilder(
-              //                pageBuilder: (_, __, ___) => SearchPage()
-              //            )
-              //            );
+              Navigator.of(context).push(new PageRouteBuilder(
+                  pageBuilder: (_, __, ___) => MyProgressPage( "Progress", _user)
+              )).then((result){
+                Navigator.of(context).pop();
+              });
             },
           ),
           ListTile(
@@ -160,7 +179,9 @@ class HomePage extends StatelessWidget {
               Navigator.of(context).push(new PageRouteBuilder(
                   pageBuilder: (_, __, ___) => CustomFoodItemPage()
               )
-              );
+              ).then((result){
+                Navigator.of(context).pop();
+              });
             },
           ),
           ListTile(
@@ -169,7 +190,9 @@ class HomePage extends StatelessWidget {
             onTap: (){
               Navigator.of(context).push(new PageRouteBuilder(
                   pageBuilder: (_, __, ___) => CustomListPage()
-              ));
+              )).then((result){
+                Navigator.of(context).pop();
+              });
             },
           ),
           ListTile(
@@ -178,7 +201,20 @@ class HomePage extends StatelessWidget {
             onTap: (){
               Navigator.of(context).push(new PageRouteBuilder(
                   pageBuilder: (_, __, ___) => StatsPage(_user)
-              ));
+              )).then((result){
+                Navigator.of(context).pop();
+              });
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.photo),
+            title: Text('View Photo Page'),
+            onTap: (){
+              Navigator.of(context).push(new PageRouteBuilder(
+                  pageBuilder: (_, __, ___) => PicturePage(_user)
+              )).then((result){
+                Navigator.of(context).pop();
+              });
             },
           ),
         ],
@@ -249,6 +285,33 @@ class HomePage extends StatelessWidget {
     );
   }
 
+
+  void updateCategories(BuildContext context){
+    reference.child(_currentUser.displayName).once().then((DataSnapshot snapshot){
+    if (snapshot.value != null) {
+      setState(() {
+        _user = new User.fromJSON(
+            _currentUser.displayName, snapshot.value);
+        categorizedList = _user.dailyCal.getCategorizedList();
+      });
+//      if (_user == null) {
+//        print(snapshot.data.value);
+//        if (snapshot.data.value == null) {
+//          _user = new User.fromScratch();
+//          _user.displayName = _currentUser.displayName;
+//        } else
+//          _user = new User.fromJSON(
+//              _currentUser.displayName, snapshot.data.value);
+//        categorizedList = _user.dailyCal.getCategorizedList();
+        print("categorizedList size = "+categorizedList[0].length.toString());
+      //return buildBody();
+    } else if (snapshot.value.hasError) {
+      // TODO Better error screen
+      //return Text("${snapshot.error}");
+    }
+    });
+  }
+
   void _showCategories(BuildContext context){
     var alert = new AlertDialog(
       title: Text('Pick a Category'),
@@ -268,7 +331,10 @@ class HomePage extends StatelessWidget {
                       Navigator.of(context).push(new PageRouteBuilder(
                           pageBuilder: (_, __, ___) => SearchPage(_user, categories[index])
                       )
-                      );
+                      ).then((result){
+                        updateCategories(context);
+                        Navigator.of(context).pop();
+                      });
                       //categorizedList = _user.dailyCal.getCategorizedList();
                     },
                   );

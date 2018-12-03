@@ -11,7 +11,7 @@ class CustomListPage extends StatelessWidget {
   }
 
   Future<bool> _back(BuildContext context) async{
-    Navigator.of(context).pop(true);
+    return true;
   }
 
   @override

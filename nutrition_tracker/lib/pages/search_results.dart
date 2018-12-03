@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nutrition_tracker/nndsearch.dart';
-import 'nutrition_facts.dart';
 import 'package:nutrition_tracker/fooditem.dart';
 import 'package:nutrition_tracker/user.dart';
-import 'package:nutrition_tracker/pages/category.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 
@@ -27,7 +25,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
   NNDCommunicator nnd = new NNDCommunicator("rzS3XGZhYjJWf9KBj4mwNYCzhQ4XqF2Y0qi7TjW2");
 
   Future<bool> _back(BuildContext context) async{
-    Navigator.of(context).pop(true);
+    return true;
   }
 
   @override
