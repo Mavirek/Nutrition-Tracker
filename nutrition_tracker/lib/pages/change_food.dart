@@ -125,8 +125,10 @@ class ChangeFoodPageState extends State<ChangeFoodPage> {
         validator: (input) {
           try {
             final int parsed = int.parse(input);
+            if (parsed <= 0)
+              return "Calories must be a positive, whole number.";
           } catch (e) {
-            return "Calories must be a positive whole number.";
+            return "Calories must be a positive, whole number.";
           }
           return null;
         }
@@ -150,9 +152,8 @@ class ChangeFoodPageState extends State<ChangeFoodPage> {
                       0
                   ), day);
                   setState(() {});
-                } else
-                  print("Validation failed.");
-                Navigator.of(context, rootNavigator: true).pop();
+                  Navigator.of(context, rootNavigator: true).pop();
+                }
               }
           ),
           FlatButton(
