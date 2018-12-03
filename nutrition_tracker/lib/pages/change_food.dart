@@ -50,11 +50,6 @@ class ChangeFoodPageState extends State<ChangeFoodPage> {
               ],
               shrinkWrap: true,
             ),
-            floatingActionButton: FloatingActionButton.extended(
-                onPressed: () => print("Add button works"),
-                icon: Icon(Icons.add),
-                label: Text("Add missing food")
-            )
         )
     );
   }
@@ -77,14 +72,21 @@ class ChangeFoodPageState extends State<ChangeFoodPage> {
       );
     }).toList() : [];
     List<Widget> listChildren = <Widget>[
-      new Text(
-          new DateFormat.MMMMd().format(day),
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20.0
-          )
-      ),
+      new ListTile(
+        title: new Text(
+            new DateFormat.MMMMd().format(day),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20.0
+            )
+        ),
+        trailing: day != today ? IconButton(
+          icon: new Icon(Icons.add),
+          tooltip: 'Add calories',
+          onPressed: () => addCalories(context, day)
+        ) : null
+      )
     ];
     listChildren.addAll(foodRows);
     return new ListView(
@@ -113,4 +115,9 @@ class ChangeFoodPageState extends State<ChangeFoodPage> {
     );
     showDialog(context: context, builder: (context) => dialog);
   }
+
+  void addCalories(BuildContext context, DateTime day) {
+    
+  }
+
 }
