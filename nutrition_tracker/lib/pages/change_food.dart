@@ -101,6 +101,7 @@ class ChangeFoodPageState extends State<ChangeFoodPage> {
               child: Text('Yes'),
               onPressed: () {
                 _user.dailyCal.items[day].remove(item);
+                setState(() {});
                 Navigator.of(context, rootNavigator: true).pop();
               }
           ),
