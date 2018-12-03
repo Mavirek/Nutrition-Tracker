@@ -3,7 +3,7 @@ import "fooditem.dart";
 import 'dart:io';
 import 'package:firebase_database/firebase_database.dart';
 
-const int MICROSECONDS_PER_DAY = 86400000000;
+const Duration WEEK = Duration(days: 7);
 
 class User {
   int _currentHeight, _currentWeight, age;
@@ -71,7 +71,18 @@ class User {
       throw new ArgumentError("Weight should not be negative.");
   }
 
-  get weeklyCal => _weeklyCal;
+  get weeklyCal {
+    Map<DateTime, int> result = Map<DateTime, int>.from(_weeklyCal);
+    _cal.items.forEach((key, value) {
+      int total = 0;
+      value.forEach((item) => total += item.calories);
+      DateTime newKey = key.subtract(Duration(days:key.weekday));
+      if (result.containsKey(newKey))
+        result[newKey] += total;
+      else
+        result[newKey] = total;
+    });
+  }
 
   void setDisplayName(String name){
     displayName = name;
@@ -175,11 +186,11 @@ class User {
 
   void _cleanByWeek() {
     DateTime today = _stripTime(DateTime.now());
-    DateTime weekStart = today.subtract(new Duration(days: today.weekday));
+    DateTime weekOld = today.subtract(WEEK);
     Map<DateTime, List<FoodItem>> removed = Map<DateTime, List<FoodItem>>.fromEntries(
-      _cal.items.entries.where((e) => e.key.isBefore(weekStart))
+      _cal.items.entries.where((e) => e.key.isBefore(weekOld))
     );
-    _cal.items.removeWhere((key, value) => key.isBefore(weekStart));
+    _cal.items.removeWhere((key, value) => key.isBefore(weekOld));
 
     Map<DateTime, int> dailyTotals = removed.map<DateTime, int>((key, value) {
       int total = 0;
