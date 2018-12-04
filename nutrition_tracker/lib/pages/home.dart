@@ -241,13 +241,9 @@ class _HomePage extends State<HomePage> {
   buildBody() {
     return new Column(
       children: <Widget>[
-        ListTile(
-          leading: GoogleUserCircleAvatar(identity: _currentUser),
-          title: Text(_currentUser.displayName),
-          subtitle: Text(_currentUser.email),
-        ),
         Divider(color: Colors.lightBlue,),
         Text("Breakfast", style: new TextStyle(fontStyle: FontStyle.italic, fontSize: 15.0),),
+        Divider(color: Colors.lightBlue,),
         new Flexible(child:
         ListView.builder(
             itemCount: categorizedList[0].length,
@@ -261,6 +257,7 @@ class _HomePage extends State<HomePage> {
         ),
         Divider(color: Colors.lightBlue,),
         Text("Lunch",  style: new TextStyle(fontStyle: FontStyle.italic, fontSize: 15.0),),
+        Divider(color: Colors.lightBlue,),
         new Flexible(child:
         ListView.builder(
             itemCount: categorizedList[1].length,
@@ -274,6 +271,7 @@ class _HomePage extends State<HomePage> {
         ),
         Divider(color: Colors.lightBlue,),
         Text("Snack",  style: new TextStyle(fontStyle: FontStyle.italic, fontSize: 15.0),),
+        Divider(color: Colors.lightBlue,),
         new Flexible(child:
         ListView.builder(
             itemCount: categorizedList[2].length,
@@ -287,6 +285,7 @@ class _HomePage extends State<HomePage> {
         ),
         Divider(color: Colors.lightBlue,),
         Text("Dinner",  style: new TextStyle(fontStyle: FontStyle.italic, fontSize: 15.0),),
+        Divider(color: Colors.lightBlue,),
         new Flexible(child:
         ListView.builder(
             itemCount: categorizedList[3].length,

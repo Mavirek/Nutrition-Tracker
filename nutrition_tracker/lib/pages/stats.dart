@@ -24,67 +24,99 @@ class StatsPage extends StatelessWidget {
         ),
         body: new ListView(
           children: <Widget>[
-            new Row(
-              children: <Widget>[
-                Expanded(
-                  child: new Text("Your Saved Age: " + user.age.toString() + ' Years', style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)),
-                ),
-                RaisedButton(
-                  child: Text("Update Age"),
-                  onPressed: () => _showAgeDialog(context),
-                ),
-              ],
+            new Card(
+              child: new Column(
+                children: <Widget>[
+                  new Text("Your Saved Age: " + user.age.toString() + ' Years', style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)),
+                  ButtonTheme.bar(
+                    child: ButtonBar(
+                      children: <Widget>[
+                        FlatButton(
+                          child: Text("Update Age"),
+                          onPressed: () => _showAgeDialog(context),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+
+              )
+
             ),
-            new SizedBox(height: 75.0,),
-            new Row(
-              children: <Widget>[
-                Expanded(
-                  child: new Text("Your Saved Height: " + user.currentHeight.toString() + ' Cm', style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)),
-                ),
-                RaisedButton(
-                  child: Text("Update Height"),
-                  onPressed: () => _showHeightDialog(context),
-                ),
-              ],
+            new Card(
+              child: new Column(
+                children: <Widget>[
+                  new Text("Your Saved Height: " + user.currentHeight.toString() + ' Cm', style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)),
+                  ButtonTheme.bar(
+                    child: ButtonBar(
+                      children: <Widget>[
+                        FlatButton(
+                          child: Text("Update Height"),
+                          onPressed: () => _showHeightDialog(context),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+
+              )
             ),
-            new SizedBox(height: 70.0,),
-            new Row(
-              children: <Widget>[
-                Expanded(
-                  child: new Text("Your Saved Weight: " + user.currentWeight.toString(), style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)),
-                ),
-                RaisedButton(
-                  child: Text("Update Weight"),
-                  onPressed: () => _showWeightDialog(context),
-                ),
-              ],
+            new Card(
+              child: new Column(
+                children: <Widget>[
+                  new Text("Your Saved Weight: " + user.currentWeight.toString(), style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)),
+                  ButtonTheme.bar(
+                    child: ButtonBar(
+                      children: <Widget>[
+                        FlatButton(
+                          child: Text("Update Weight"),
+                          onPressed: () => _showWeightDialog(context),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+
+              )
             ),
-            new SizedBox(height: 70.0,),
-            new Row(
-              children: <Widget>[
-                Expanded(
-                  child: new Text("Your Saved Goal: " + user.goal.toString() + ' Calories Per Day', style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)),
-                ),
-                RaisedButton(
-                  child: Text("Update Goal"),
-                  onPressed: () => _showGoalDialog(context),
-                ),
-              ],
+            new Card(
+              child: new Column(
+                children: <Widget>[
+                  new Text("Your Saved Goal: " + user.goal.toString() + ' Calories Per Day', style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)),
+                  ButtonTheme.bar(
+                    child: ButtonBar(
+                      children: <Widget>[
+                        FlatButton(
+                          child: Text("Update Goal"),
+                          onPressed: () => _showGoalDialog(context),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+
+              )
             ),
-            new SizedBox(height: 70.0,),
-            new Row(
-              children: <Widget>[
-                Expanded(
-                  child: sex(),//new Text("Your Saved Goal: " + user.goal.toString() + ' Calories Per Day', style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)),
-                ),
-                RaisedButton(
-                  child: Text("Update Sex"),
-                  onPressed: () => _showSexDialog(context),
-                ),
-              ],
+            new Card(
+              child: new Column(
+                children: <Widget>[
+                  sex(),
+                  ButtonTheme.bar(
+                    child: ButtonBar(
+                      children: <Widget>[
+                        FlatButton(
+                          child: Text("Update Sex"),
+                          onPressed: () => _showSexDialog(context),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+
+              )
             )
           ],
-        ),
+        )
       )
     );
   }
