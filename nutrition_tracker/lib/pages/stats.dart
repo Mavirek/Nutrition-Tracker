@@ -117,6 +117,26 @@ class StatsPage extends StatelessWidget {
                 ],
 
               )
+            ),
+            new Card(
+              child: new Column(
+                children: <Widget>[
+                  Text(
+                      'Your prefered units: ' + (user.metric ? "Metric" : "Imperial"),
+                      style: TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)
+                  ),
+                  ButtonTheme.bar(
+                    child: ButtonBar(
+                      children: <Widget>[
+                        FlatButton(
+                          child: (Text(user.metric ? "Change to Imperial" : "Change to Metric")),
+                          onPressed: () {},
+                        )
+                      ]
+                    )
+                  )
+                ]
+              )
             )
           ],
         )
