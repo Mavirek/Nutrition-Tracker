@@ -5,6 +5,8 @@ import 'package:firebase_database/firebase_database.dart';
 
 const Duration WEEK = Duration(days: 7);
 
+const double LBS_TO_KGS = 0.45359237;
+
 class User {
   int _currentHeight, _currentWeight, age;
   int goal;
@@ -61,10 +63,10 @@ class User {
       throw new ArgumentError("Height should not be negative.");
   }
 
-  get currentWeight => _currentWeight;
+  get currentWeight => metric ? (_currentWeight * LBS_TO_KGS).round() : _currentWeight;
   set currentWeight(int newWeight) {
     if (newWeight >= 0) {
-      _currentWeight = newWeight;
+      _currentWeight = metric ? (newWeight / LBS_TO_KGS).round() : newWeight;
       archiveWeight[DateTime.now()] = newWeight;
       goalCalculator();
     } else
@@ -150,7 +152,7 @@ class User {
   }
 
   void goalCalculator(){
-    double weightKG = currentWeight * 0.453592;
+    double weightKG = _currentWeight * LBS_TO_KGS;
     if(isMale())
       goal = ((weightKG * 10) + (6.25 * currentHeight) - (5 * age) + 5).round();
     else
@@ -182,6 +184,8 @@ class User {
     print(result);
     return result;
   }
+
+  get weightUnit => metric ? "kgs." : "lbs.";
 
   DateTime _stripTime(DateTime dt) {
     return new DateTime(dt.year, dt.month, dt.day);

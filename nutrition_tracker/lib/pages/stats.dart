@@ -64,7 +64,10 @@ class StatsPage extends StatelessWidget {
             new Card(
               child: new Column(
                 children: <Widget>[
-                  new Text("Your Saved Weight: " + user.currentWeight.toString(), style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)),
+                  new Text(
+                      "Your Saved Weight: " + user.currentWeight.toString() + " " + user.weightUnit,
+                      style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)
+                  ),
                   ButtonTheme.bar(
                     child: ButtonBar(
                       children: <Widget>[
@@ -145,7 +148,7 @@ class StatsPage extends StatelessWidget {
         },
         controller: control,
         decoration: InputDecoration(
-            hintText: 'Please enter M for Male or F for Female'
+            hintText: 'Please enter M ffor Male or F for Female'
         ),
       ),
       actions: <Widget>[
