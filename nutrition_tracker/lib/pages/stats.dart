@@ -144,7 +144,7 @@ class StatsState extends State<StatsPage> {
                                   children: <Widget>[
                                     FlatButton(
                                       child: (Text(user.metric ? "Change to Imperial" : "Change to Metric")),
-                                      onPressed: () {},
+                                      onPressed: () => setState(() => user.metric = !user.metric),
                                     )
                                   ]
                               )
