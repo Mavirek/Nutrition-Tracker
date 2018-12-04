@@ -53,26 +53,35 @@ class _MyProgressPageState extends State<MyProgressPage> {
     DateTime twoDays = DateTime.now().subtract(new Duration(days: 2));
     DateTime oneDays = DateTime.now().subtract(new Duration(days: 1));
     DateTime today = DateTime.now();
+    print(today.toString());
+    String sevDay = sevDays.toString().substring(5, 7)+"\n"+sevDays.toString().substring(8, 10);
+    String sixDay = sixDays.toString().substring(5, 7)+"\n"+sixDays.toString().substring(8, 10);
+    String fivDay = fivDays.toString().substring(5, 7)+"\n"+fivDays.toString().substring(8, 10);
+    String fouDay = fouDays.toString().substring(5, 7)+"\n"+fouDays.toString().substring(8, 10);
+    String thrDay = thrDays.toString().substring(5, 7)+"\n"+thrDays.toString().substring(8, 10);
+    String twoDay = twoDays.toString().substring(5, 7)+"\n"+twoDays.toString().substring(8, 10);
+    String oneDay = oneDays.toString().substring(5, 7)+"\n"+oneDays.toString().substring(8, 10);
+    String tody = today.toString().substring(5, 7)+"\n"+today.toString().substring(8, 10);
     var data = [
-      new CaloriesPerDay(sevDays.toString().substring(5, 10), user.dailyCal.getDailyCal(sevDays), Colors.blue),
-      new CaloriesPerDay(sixDays.toString().substring(5, 10), user.dailyCal.getDailyCal(sixDays), Colors.blue),
-      new CaloriesPerDay(fivDays.toString().substring(5, 10), user.dailyCal.getDailyCal(fivDays), Colors.blue),
-      new CaloriesPerDay(fouDays.toString().substring(5, 10), user.dailyCal.getDailyCal(fouDays), Colors.blue),
-      new CaloriesPerDay(thrDays.toString().substring(5, 10), user.dailyCal.getDailyCal(thrDays), Colors.blue),
-      new CaloriesPerDay(twoDays.toString().substring(5, 10), user.dailyCal.getDailyCal(twoDays), Colors.blue),
-      new CaloriesPerDay(oneDays.toString().substring(5, 10), user.dailyCal.getDailyCal(oneDays), Colors.blue),
-      new CaloriesPerDay(today.toString().substring(5, 10), user.dailyCal.getDailyCal(today), Colors.blue),
+      new CaloriesPerDay(sevDay, user.dailyCal.getDailyCal(sevDays), Colors.blue),
+      new CaloriesPerDay(sixDay, user.dailyCal.getDailyCal(sixDays), Colors.blue),
+      new CaloriesPerDay(fivDay, user.dailyCal.getDailyCal(fivDays), Colors.blue),
+      new CaloriesPerDay(fouDay, user.dailyCal.getDailyCal(fouDays), Colors.blue),
+      new CaloriesPerDay(thrDay, user.dailyCal.getDailyCal(thrDays), Colors.blue),
+      new CaloriesPerDay(twoDay, user.dailyCal.getDailyCal(twoDays), Colors.blue),
+      new CaloriesPerDay(oneDay, user.dailyCal.getDailyCal(oneDays), Colors.blue),
+      new CaloriesPerDay(tody, user.dailyCal.getDailyCal(today), Colors.blue),
     ];
 
     var goalData = [
-      new CaloriesPerDay(sevDays.toString().substring(5, 10), user.goal, Colors.blue),
-      new CaloriesPerDay(sixDays.toString().substring(5, 10), user.goal, Colors.blue),
-      new CaloriesPerDay(fivDays.toString().substring(5, 10), user.goal, Colors.blue),
-      new CaloriesPerDay(fouDays.toString().substring(5, 10), user.goal, Colors.blue),
-      new CaloriesPerDay(thrDays.toString().substring(5, 10), user.goal, Colors.blue),
-      new CaloriesPerDay(twoDays.toString().substring(5, 10), user.goal, Colors.blue),
-      new CaloriesPerDay(oneDays.toString().substring(5, 10), user.goal, Colors.blue),
-      new CaloriesPerDay(today.toString().substring(5, 10), user.goal, Colors.blue),
+      new CaloriesPerDay(sevDay, user.goal, Colors.blue),
+      new CaloriesPerDay(sixDay, user.goal, Colors.blue),
+      new CaloriesPerDay(fivDay, user.goal, Colors.blue),
+      new CaloriesPerDay(fouDay, user.goal, Colors.blue),
+      new CaloriesPerDay(thrDay, user.goal, Colors.blue),
+      new CaloriesPerDay(twoDay, user.goal, Colors.blue),
+      new CaloriesPerDay(oneDay, user.goal, Colors.blue),
+      new CaloriesPerDay(tody, user.goal, Colors.blue),
     ];
 
     var series = [
@@ -152,7 +161,11 @@ class _MyProgressPageState extends State<MyProgressPage> {
         child: new ListView(
           //mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            new Divider(),
+            new Text("Weekly Caloric Intake",  textAlign: TextAlign.center,),
             chartWidget,
+            new Divider(color: Colors.lightBlue,),
+            new Text("Weight Progress",  textAlign: TextAlign.center,),
             chartWidget2
           ],
         ),

@@ -170,11 +170,14 @@ class _HomePage extends State<HomePage> {
             leading: Icon(Icons.fastfood),
             title: Text('Search Food'),
             onTap: (){
-              _showCategories(context);
-//                  Navigator.of(context).push(new PageRouteBuilder(
-//                      pageBuilder: (_, __, ___) => SearchPage(_user)
-//                    )
-//                  );
+              //_showCategories(context);
+                  Navigator.of(context).push(new PageRouteBuilder(
+                      pageBuilder: (_, __, ___) => SearchPage(user: _user)
+                    )
+                  ).then((result){
+                    updateCategories(context);
+                    Navigator.of(context).pop();
+                  });
             },
           ),
           ListTile(
@@ -328,42 +331,42 @@ class _HomePage extends State<HomePage> {
     });
   }
 
-  void _showCategories(BuildContext context){
-    var alert = new AlertDialog(
-      title: Text('Pick a Category'),
-      content: Container(
-        width: MediaQuery.of(context).size.width * 0.9,
-        height: MediaQuery.of(context).size.width * 0.9,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              child:ListView.builder(
-                itemCount: categories.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    title: Text(categories[index]),
-                    onTap: () {
-                      Navigator.of(context).push(new PageRouteBuilder(
-                          pageBuilder: (_, __, ___) => SearchPage(_user, categories[index])
-                      )
-                      ).then((result){
-                        updateCategories(context);
-                        Navigator.of(context).pop();
-                      });
-                      //categorizedList = _user.dailyCal.getCategorizedList();
-                    },
-                  );
-                },
-                shrinkWrap: true,
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-    showDialog(context: context, builder: (context) => alert);
-  }
+//  void _showCategories(BuildContext context){
+//    var alert = new AlertDialog(
+//      title: Text('Pick a Category'),
+//      content: Container(
+//        width: MediaQuery.of(context).size.width * 0.9,
+//        height: MediaQuery.of(context).size.width * 0.9,
+//        child: Column(
+//          mainAxisAlignment: MainAxisAlignment.center,
+//          children: <Widget>[
+//            Expanded(
+//              child:ListView.builder(
+//                itemCount: categories.length,
+//                itemBuilder: (BuildContext context, int index) {
+//                  return ListTile(
+//                    title: Text(categories[index]),
+//                    onTap: () {
+//                      Navigator.of(context).push(new PageRouteBuilder(
+//                          pageBuilder: (_, __, ___) => SearchPage(_user, categories[index])
+//                      )
+//                      ).then((result){
+//                        updateCategories(context);
+//                        Navigator.of(context).pop();
+//                      });
+//                      //categorizedList = _user.dailyCal.getCategorizedList();
+//                    },
+//                  );
+//                },
+//                shrinkWrap: true,
+//              ),
+//            )
+//          ],
+//        ),
+//      ),
+//    );
+//    showDialog(context: context, builder: (context) => alert);
+//  }
   void _showFacts(BuildContext context, FoodItem ft){
     var alert = new AlertDialog(
       title: Text(ft.getName()),

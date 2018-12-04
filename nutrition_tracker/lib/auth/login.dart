@@ -37,9 +37,6 @@ class LoginPage extends StatelessWidget {
       title: 'Login Page',
       home: new Scaffold(
         appBar: new AppBar(
-          title: new Text(
-            'Login Page'
-          ),
           backgroundColor: Colors.blue,
         ),
         body: new Container(
