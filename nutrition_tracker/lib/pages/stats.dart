@@ -2,12 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:nutrition_tracker/user.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-class StatsPage extends StatelessWidget {
+class StatsPage extends StatefulWidget {
 
   User user;
-  final reference = FirebaseDatabase.instance.reference();
 
-  StatsPage(this.user);
+  StatsPage({Key key, @required User user}) :
+      this.user = user,
+      super(key: key);
+
+  StatsState createState() => new StatsState();
+}
+
+class StatsState extends State<StatsPage> {
+  final reference = FirebaseDatabase.instance.reference();
+  User user;
+
+  @override
+  void initState() {
+    super.initState();
+    this.user = widget.user;
+  }
 
   Future<bool> _back(BuildContext context) async{
     //Will need to write User object to firebase before going back!!
@@ -17,130 +31,130 @@ class StatsPage extends StatelessWidget {
 
   Widget build(BuildContext context){
     return new WillPopScope(
-      onWillPop: () => _back(context),
-      child: new Scaffold(
-        appBar: new AppBar(
-          title: Text('User Statistics'),
-        ),
-        body: new ListView(
-          children: <Widget>[
-            new Card(
-              child: new Column(
-                children: <Widget>[
-                  new Text("Your Saved Age: " + user.age.toString() + ' Years', style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)),
-                  ButtonTheme.bar(
-                    child: ButtonBar(
+        onWillPop: () => _back(context),
+        child: new Scaffold(
+            appBar: new AppBar(
+              title: Text('User Statistics'),
+            ),
+            body: new ListView(
+              children: <Widget>[
+                new Card(
+                    child: new Column(
                       children: <Widget>[
-                        FlatButton(
-                          child: Text("Update Age"),
-                          onPressed: () => _showAgeDialog(context),
+                        new Text("Your Saved Age: " + user.age.toString() + ' Years', style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)),
+                        ButtonTheme.bar(
+                          child: ButtonBar(
+                            children: <Widget>[
+                              FlatButton(
+                                child: Text("Update Age"),
+                                onPressed: () => _showAgeDialog(context),
+                              )
+                            ],
+                          ),
                         )
                       ],
-                    ),
-                  )
-                ],
 
-              )
-
-            ),
-            new Card(
-              child: new Column(
-                children: <Widget>[
-                  new Text("Your Saved Height: " + user.currentHeight.toString() + ' Cm', style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)),
-                  ButtonTheme.bar(
-                    child: ButtonBar(
-                      children: <Widget>[
-                        FlatButton(
-                          child: Text("Update Height"),
-                          onPressed: () => _showHeightDialog(context),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-
-              )
-            ),
-            new Card(
-              child: new Column(
-                children: <Widget>[
-                  new Text(
-                      "Your Saved Weight: " + user.currentWeight.toString() + " " + user.weightUnit,
-                      style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)
-                  ),
-                  ButtonTheme.bar(
-                    child: ButtonBar(
-                      children: <Widget>[
-                        FlatButton(
-                          child: Text("Update Weight"),
-                          onPressed: () => _showWeightDialog(context),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-
-              )
-            ),
-            new Card(
-              child: new Column(
-                children: <Widget>[
-                  new Text("Your Saved Goal: " + user.goal.toString() + ' Calories Per Day', style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)),
-                  ButtonTheme.bar(
-                    child: ButtonBar(
-                      children: <Widget>[
-                        FlatButton(
-                          child: Text("Update Goal"),
-                          onPressed: () => _showGoalDialog(context),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-
-              )
-            ),
-            new Card(
-              child: new Column(
-                children: <Widget>[
-                  sex(),
-                  ButtonTheme.bar(
-                    child: ButtonBar(
-                      children: <Widget>[
-                        FlatButton(
-                          child: Text("Update Sex"),
-                          onPressed: () => _showSexDialog(context),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-
-              )
-            ),
-            new Card(
-              child: new Column(
-                children: <Widget>[
-                  Text(
-                      'Your prefered units: ' + (user.metric ? "Metric" : "Imperial"),
-                      style: TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)
-                  ),
-                  ButtonTheme.bar(
-                    child: ButtonBar(
-                      children: <Widget>[
-                        FlatButton(
-                          child: (Text(user.metric ? "Change to Imperial" : "Change to Metric")),
-                          onPressed: () {},
-                        )
-                      ]
                     )
-                  )
-                ]
-              )
+
+                ),
+                new Card(
+                    child: new Column(
+                      children: <Widget>[
+                        new Text("Your Saved Height: " + user.currentHeight.toString() + ' Cm', style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)),
+                        ButtonTheme.bar(
+                          child: ButtonBar(
+                            children: <Widget>[
+                              FlatButton(
+                                child: Text("Update Height"),
+                                onPressed: () => _showHeightDialog(context),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+
+                    )
+                ),
+                new Card(
+                    child: new Column(
+                      children: <Widget>[
+                        new Text(
+                            "Your Saved Weight: " + user.currentWeight.toString() + " " + user.weightUnit,
+                            style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)
+                        ),
+                        ButtonTheme.bar(
+                          child: ButtonBar(
+                            children: <Widget>[
+                              FlatButton(
+                                child: Text("Update Weight"),
+                                onPressed: () => _showWeightDialog(context),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+
+                    )
+                ),
+                new Card(
+                    child: new Column(
+                      children: <Widget>[
+                        new Text("Your Saved Goal: " + user.goal.toString() + ' Calories Per Day', style: new TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)),
+                        ButtonTheme.bar(
+                          child: ButtonBar(
+                            children: <Widget>[
+                              FlatButton(
+                                child: Text("Update Goal"),
+                                onPressed: () => _showGoalDialog(context),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+
+                    )
+                ),
+                new Card(
+                    child: new Column(
+                      children: <Widget>[
+                        sex(),
+                        ButtonTheme.bar(
+                          child: ButtonBar(
+                            children: <Widget>[
+                              FlatButton(
+                                child: Text("Update Sex"),
+                                onPressed: () => _showSexDialog(context),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+
+                    )
+                ),
+                new Card(
+                    child: new Column(
+                        children: <Widget>[
+                          Text(
+                              'Your prefered units: ' + (user.metric ? "Metric" : "Imperial"),
+                              style: TextStyle(fontSize: 20.0, fontStyle: FontStyle.italic)
+                          ),
+                          ButtonTheme.bar(
+                              child: ButtonBar(
+                                  children: <Widget>[
+                                    FlatButton(
+                                      child: (Text(user.metric ? "Change to Imperial" : "Change to Metric")),
+                                      onPressed: () {},
+                                    )
+                                  ]
+                              )
+                          )
+                        ]
+                    )
+                )
+              ],
             )
-          ],
         )
-      )
     );
   }
 
@@ -268,8 +282,8 @@ class StatsPage extends StatelessWidget {
   void _showWeightDialog(BuildContext context) {
     final control = TextEditingController();
     var alert = new AlertDialog(
-        title: Text('Update Weight'),
-        content: TextFormField(
+      title: Text('Update Weight'),
+      content: TextFormField(
         validator: (value) {
           if(value.isEmpty){
             return 'Please enter some text';
@@ -284,17 +298,17 @@ class StatsPage extends StatelessWidget {
         },
         controller: control,
         keyboardType: TextInputType.number,
-          decoration: InputDecoration(
-              hintText: 'Enter Your new Weight'
-          ),
+        decoration: InputDecoration(
+            hintText: 'Enter Your new Weight'
+        ),
       ),
       actions: <Widget>[
         new FlatButton(
-          onPressed: () {
-            user.currentWeight = int.parse(control.text);
-            Navigator.of(context, rootNavigator: true).pop();
-          },
-          child: Text('Save')
+            onPressed: () {
+              user.currentWeight = int.parse(control.text);
+              Navigator.of(context, rootNavigator: true).pop();
+            },
+            child: Text('Save')
         )
       ],
     );

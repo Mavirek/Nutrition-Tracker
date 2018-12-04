@@ -220,7 +220,7 @@ class _HomePage extends State<HomePage> {
             title: Text('View Statistics Page'),
             onTap: (){
               Navigator.of(context).push(new PageRouteBuilder(
-                  pageBuilder: (_, __, ___) => StatsPage(_user)
+                  pageBuilder: (_, __, ___) => StatsPage(user: _user)
               )).then((result){
                 Navigator.of(context).pop();
               });
