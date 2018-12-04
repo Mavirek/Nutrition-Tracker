@@ -53,7 +53,13 @@ class User {
   }
 
   get currentHeight => _currentHeight;
-  get archiveWeight => _archiveWeight;
+  get archiveWeight {
+    if (metric)
+      return _archiveWeight.map((key, value) => MapEntry(key, (value * LBS_TO_KGS).round()));
+    else
+      return _archiveWeight;
+  }
+
   set currentHeight(int newHeight) {
     if (newHeight >= 0) {
       _currentHeight = newHeight;
@@ -66,8 +72,9 @@ class User {
   get currentWeight => metric ? (_currentWeight * LBS_TO_KGS).round() : _currentWeight;
   set currentWeight(int newWeight) {
     if (newWeight >= 0) {
-      _currentWeight = metric ? (newWeight / LBS_TO_KGS).round() : newWeight;
-      archiveWeight[DateTime.now()] = newWeight;
+      newWeight = metric ? (newWeight / LBS_TO_KGS).round() : newWeight;
+      _currentWeight = newWeight;
+      _archiveWeight[DateTime.now()] = newWeight;
       goalCalculator();
     } else
       throw new ArgumentError("Weight should not be negative.");
