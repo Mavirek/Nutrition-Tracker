@@ -30,7 +30,6 @@ class CustomList {
     // When creating the db, create the table
     await db.execute(
         "CREATE TABLE CustomList(foodid INTEGER PRIMARY KEY, name TEXT, calories INTEGER, carbs INTEGER, fat INTEGER, protein INTEGER )");
-    print("Created tables");
   }
 
 //  int count() async {
@@ -48,7 +47,6 @@ class CustomList {
     for (int i = 0; i < list.length; i++) {
       foodItems.add(new FoodItem(list[i]["name"], list[i]["calories"], list[i]["carbs"], list[i]["fat"], list[i]["protein"]));
     }
-    print(foodItems.length);
     return foodItems;
   }
 
@@ -93,7 +91,6 @@ class CustomList {
     for (int i = 0; i < list.length; i++) {
       foodItems.add(new FoodItem(list[i]["name"], list[i]["calories"], list[i]["carbs"], list[i]["fat"], list[i]["protein"]));
     }
-    print(foodItems.length);
     return foodItems;
   }
 
