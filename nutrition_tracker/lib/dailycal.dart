@@ -14,7 +14,6 @@ class DailyCal {
     items = json.map<DateTime, List<FoodItem>>((dynamic key, dynamic value) {
         DateTime time = DateTime.fromMillisecondsSinceEpoch(int.parse(key));
         List<FoodItem> list = new List<FoodItem>();
-        print("is value map = "+(value is Map).toString());
         value.forEach((v) => list.add(new FoodItem.fromJSON(v)));
         return MapEntry<DateTime, List<FoodItem>>(time, list);
       }
@@ -96,7 +95,6 @@ class DailyCal {
   }
 
   toJSON() {
-    print(items);
     if (items.isNotEmpty)
       return items.map<String, dynamic>(
         (DateTime key, List<FoodItem> value) {

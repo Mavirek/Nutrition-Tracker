@@ -188,7 +188,6 @@ class User {
       ),
       "Daily Calories": _cal.toJSON()
     };
-    print(result);
     return result;
   }
 

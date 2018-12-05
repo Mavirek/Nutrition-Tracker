@@ -11,7 +11,7 @@ void main() {
 
     test('Test getFoodItem', () async {
 
-      FoodItem f = await comm.getItem(21246);
+      FoodItem f = await comm.getItem(21246.toString());
 
       expect(f.name, "WENDY'S, Chicken Nuggets");
       expect(f.calories, 222);
@@ -33,7 +33,7 @@ void main() {
       expect(i.name, "WENDY'S, Chicken Nuggets");
       expect(i.group, "Fast Foods");
       expect(i.dataSource, "SR");
-      expect(i.ndbno, 21246);
+      expect(i.ndbno, 21246.toString());
       expect(i.manufacturer, "Wendy's International, Inc.");
     });
 
