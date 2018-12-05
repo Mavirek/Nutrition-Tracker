@@ -1,3 +1,5 @@
 # Nutrition-Tracker
 
-https://trello.com/b/0lY0Bzjv/nutrition-tracker 
+Two APK files are provided.
+The release APK works on Android devices (and possibly ARM emulators).
+The debug APK works on x86 emulators.
