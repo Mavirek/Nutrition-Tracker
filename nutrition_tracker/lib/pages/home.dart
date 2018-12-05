@@ -11,6 +11,7 @@ import 'stats.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'picture.dart';
 import 'progress.dart';
+import 'package:nutrition_tracker/auth/login.dart';
 
 class HomePage extends StatefulWidget {
   GoogleSignInAccount currentUser;
@@ -60,7 +61,8 @@ class _HomePage extends State<HomePage> {
   Future<Null> _handleSignOut(BuildContext context) async{
     //reference.child(_currentUser.displayName).set(_user.toJson());
     await _googleSignIn.disconnect();
-    Navigator.pop(context);
+    //Navigator.pop(context);
+    Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (BuildContext context) => LoginPage()));
   }
 
 
