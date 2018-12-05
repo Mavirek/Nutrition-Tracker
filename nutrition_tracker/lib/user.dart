@@ -42,8 +42,8 @@ class User {
         }) : new Map<DateTime, int>(),
         goal = map["Goal"],
         metric = map["Metric"],
-        _previousPhoto = map.containsKey("before") ? File(map["Before"]) : File(""),
-        _currentPhoto = map.containsKey("after") ? File(map["After"]) : File(""),
+        _previousPhoto = map.containsKey("Before") ? File(map["Before"]) : File(""),
+        _currentPhoto = map.containsKey("After") ? File(map["After"]) : File(""),
         _cal = map["Daily Calories"] != "empty" ? new DailyCal.fromJSON(map["Daily Calories"]) : new DailyCal.fromScratch(),
         _weeklyCal = map.containsKey("Weekly Calories") ? map["Weekly Calories"].map<DateTime, int>((dynamic k, dynamic value) {
           return new MapEntry<DateTime, int>(DateTime.fromMillisecondsSinceEpoch(int.parse(k)), value);
