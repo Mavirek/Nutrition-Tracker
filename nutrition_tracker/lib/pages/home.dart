@@ -81,7 +81,6 @@ class _HomePage extends State<HomePage> {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       if (_user == null) {
-                        print(snapshot.data.value);
                         if (snapshot.data.value == null) {
                           _user = new User.fromScratch();
                           _user.displayName = _currentUser.displayName;
@@ -89,9 +88,6 @@ class _HomePage extends State<HomePage> {
                           _user = new User.fromJSON(
                               _currentUser.displayName, snapshot.data.value);
                         categorizedList = _user.dailyCal.getCategorizedList();
-                        print(_user);
-                        print("Weekly Calories: " + _user.weeklyCal.toString());
-                        print("categorizedList size = "+categorizedList[0].length.toString());
                       }
                       return buildDrawer(context);
                     } else if (snapshot.hasError) {
@@ -109,7 +105,6 @@ class _HomePage extends State<HomePage> {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       if (_user == null) {
-                        print(snapshot.data.value);
                         if (snapshot.data.value == null) {
                           _user = new User.fromScratch();
                           _user.displayName = _currentUser.displayName;
@@ -117,9 +112,6 @@ class _HomePage extends State<HomePage> {
                           _user = new User.fromJSON(
                               _currentUser.displayName, snapshot.data.value);
                         categorizedList = _user.dailyCal.getCategorizedList();
-                        print(_user);
-                        print("Weekly Calories: " + _user.weeklyCal.toString());
-                        print("categorizedList size = "+categorizedList[0].length.toString());
                       }
                       return buildBody();
                     } else if (snapshot.hasError) {
@@ -313,17 +305,6 @@ class _HomePage extends State<HomePage> {
             _currentUser.displayName, snapshot.value);
         categorizedList = _user.dailyCal.getCategorizedList();
       });
-//      if (_user == null) {
-//        print(snapshot.data.value);
-//        if (snapshot.data.value == null) {
-//          _user = new User.fromScratch();
-//          _user.displayName = _currentUser.displayName;
-//        } else
-//          _user = new User.fromJSON(
-//              _currentUser.displayName, snapshot.data.value);
-//        categorizedList = _user.dailyCal.getCategorizedList();
-        print("categorizedList size = "+categorizedList[0].length.toString());
-      //return buildBody();
     } else if (snapshot.value.hasError) {
       // TODO Better error screen
       //return Text("${snapshot.error}");
