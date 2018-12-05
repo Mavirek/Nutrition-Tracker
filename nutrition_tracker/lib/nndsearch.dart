@@ -17,9 +17,6 @@ class NNDCommunicator {
     String body = response.body;
     if(body.contains("\"status\": 400"))
       statusCode = 400;
-    print("status code = "+statusCode.toString());
-    print("reason = "+reason);
-    print("response body = "+response.body);
     if (statusCode == 200) {
       return new NNDSearchResults.fromJSON(
             json.decode(response.body)['list']);
@@ -32,7 +29,7 @@ class NNDCommunicator {
       throw new Exception("HTTP GET EXCEPTION: $statusCode: $reason");
   }
 
-  Future<FoodItem> getItem(int ndbno) async {
+  Future<FoodItem> getItem(String ndbno) async {
     String url = "https://api.nal.usda.gov/ndb/nutrients/?format=json&api_key=$_apiKey&nutrients=208&nutrients=205&nutrients=204&nutrients=203&ndbno=$ndbno";
     Response response = await get(url);
     int statusCode = response.statusCode;
@@ -116,7 +113,7 @@ class NNDSearchResults {
 class NNDSearchItem {
   final String name;
   final String group;
-  final int ndbno;
+  final String ndbno;
   final String dataSource;
   final String manufacturer;
 
@@ -125,7 +122,7 @@ class NNDSearchItem {
   NNDSearchItem.fromJSON(Map<String, dynamic> json)
       : name = json["name"],
         group = json["group"],
-        ndbno = int.parse(json["ndbno"]),
+        ndbno = json["ndbno"],
         dataSource = json["ds"],
         manufacturer = json["manu"];
 }
