@@ -39,7 +39,7 @@ class CustomListPage extends StatelessWidget {
 
                             ListTile(
                               title: new Text(snapshot.data[index].name),
-                              subtitle: new Text(snapshot.data[index].calories.toString()+ "\n"+snapshot.data[index].getMacros()[0].toString()+"\n"+snapshot.data[index].getMacros()[1].toString()+"\n"+snapshot.data[index].getMacros()[2].toString()),
+                              subtitle: new Text("Calories: "+snapshot.data[index].calories.toString()+ "\nCarbs: "+snapshot.data[index].getMacros()[0].toString()+"\nFats: "+snapshot.data[index].getMacros()[1].toString()+"\nProtein: "+snapshot.data[index].getMacros()[2].toString()),
                             ),
                           ],
                         ),

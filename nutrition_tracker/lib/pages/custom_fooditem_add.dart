@@ -48,7 +48,7 @@ class CustomFoodState extends State<CustomFoodItemForm>{
           int.parse(_proControl.text));
       var customList = CustomList();
       customList.addCustomFoodItem(foodItem);
-      Scaffold.of(context).showSnackBar(SnackBar(content: Text(customList.nextFoodID().toString())));
+      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Food added')));
     }
   }
 
