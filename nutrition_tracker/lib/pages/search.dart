@@ -99,9 +99,7 @@ class _SearchPage extends State<SearchPage> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
               nnd.search(textController.text, 25, 1).then((results) async {
-                //print("is results null? "+(results==null).toString());
                 if (results == null) {
-                  print("search failed");
                   var customList = CustomList();
                   List<FoodItem> customFoods = await customList
                       .searchCustomList(textController.text);

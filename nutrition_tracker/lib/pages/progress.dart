@@ -53,7 +53,6 @@ class _MyProgressPageState extends State<MyProgressPage> {
     DateTime twoDays = DateTime.now().subtract(new Duration(days: 2));
     DateTime oneDays = DateTime.now().subtract(new Duration(days: 1));
     DateTime today = DateTime.now();
-    print(today.toString());
     String sevDay = sevDays.toString().substring(5, 7)+"\n"+sevDays.toString().substring(8, 10);
     String sixDay = sixDays.toString().substring(5, 7)+"\n"+sixDays.toString().substring(8, 10);
     String fivDay = fivDays.toString().substring(5, 7)+"\n"+fivDays.toString().substring(8, 10);
