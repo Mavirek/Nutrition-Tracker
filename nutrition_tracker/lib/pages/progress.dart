@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:nutrition_tracker/user.dart';
+import 'dart:collection';
 
 
 class MyProgressPage extends StatefulWidget {
@@ -43,7 +44,8 @@ class _MyProgressPageState extends State<MyProgressPage> {
   }
   
   void setWeightData(User user){
-    Map<DateTime, int> map = user.archiveWeight;
+    Map<DateTime, int> map = new SplayTreeMap.from(user.archiveWeight,
+        (dt1, dt2) => dt1.compareTo(dt2));
 
     map.forEach(add);
   }
@@ -52,7 +54,8 @@ class _MyProgressPageState extends State<MyProgressPage> {
     calList.add(new CaloriesPerWeek(day, cal, Colors.blue));
   }
   void setWeekData(User user){
-    Map<DateTime, int> map = user.weeklyCal;
+    Map<DateTime, int> map = new SplayTreeMap.from(user.weeklyCal,
+            (dt1, dt2) => dt1.compareTo(dt2));
 
     map.forEach(addWeek);
   }
