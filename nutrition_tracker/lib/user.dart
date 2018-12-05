@@ -1,7 +1,6 @@
 import "dailycal.dart";
 import "fooditem.dart";
 import 'dart:io';
-import 'package:firebase_database/firebase_database.dart';
 
 const Duration WEEK = Duration(days: 7);
 
